@@ -2,7 +2,7 @@
 
 **Disclaimer: Projekt zrobiony typowo pod moje potrzeby i trochę z nudów. Prawie cały kod został napisany przez ~~szmelcucha~~ LLM i nie został sprawdzony przez człowieka, bo mi się nie chciało pozdro**
 
-Plany zajęć dla teleinfy na [GH Pages](https://matikd13.github.io/usos_scraper/).
+Plany zajęć dla teleinfy, cyber i może jakieś dodam potem są na [GH Pages](https://matikd13.github.io/usos_scraper/).
 
 ## Jak używać
 
