@@ -493,6 +493,23 @@
         // Moja grupa: klik w kafelek = wybór tej grupy dla (przedmiot, typ). Np. lab gr.1, projekt gr.2 osobno.
         const myPlan = {}; // "subject|type" -> group
 
+        const STORAGE_KEY = 'usos_timetable_' + (location.pathname || '/').replace(/^\/$/, 'index').replace(/^\//, '').replace(/\//g, '_') || 'index';
+
+        function loadOptions() {
+            try {
+                const s = localStorage.getItem(STORAGE_KEY);
+                return s ? JSON.parse(s) : null;
+            } catch (e) { return null; }
+        }
+
+        function saveOptions() {
+            const activeSubjects = Array.from(document.querySelectorAll('#subjectFilters input:checked')).map(cb => cb.value);
+            const activeTypes = Array.from(document.querySelectorAll('#typeFilters input:checked')).map(cb => cb.value);
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({ activeSubjects, activeTypes, myPlan: { ...myPlan } }));
+            } catch (e) { /* quota or private mode */ }
+        }
+
         function planKey(ev) {
             return ev.subject + "|" + ev.type;
         }
@@ -551,24 +568,36 @@
         const uniqueSubjects = [...new Set(rawData.map(d => d.subject))].sort();
         const uniqueTypes = [...new Set(rawData.map(d => d.type))].sort();
 
-        // Inicjalizacja filtrów
+        // Inicjalizacja filtrów (przywraca zaznaczenia z localStorage)
         function initFilters() {
+            const saved = loadOptions();
+            const savedSubjects = saved && saved.activeSubjects ? new Set(saved.activeSubjects) : null;
+            const savedTypes = saved && saved.activeTypes ? new Set(saved.activeTypes) : null;
+
             const subContainer = document.getElementById('subjectFilters');
             uniqueSubjects.forEach(sub => {
+                const checked = savedSubjects == null ? true : savedSubjects.has(sub);
                 const label = document.createElement('label');
                 label.className = 'checkbox-label';
-                label.innerHTML = `<input type="checkbox" checked value="${sub}" onchange="renderSchedule()"> ${sub}`;
+                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(sub).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(sub).replace(/&/g, '&amp;').replace(/</g, '&lt;')}`;
                 subContainer.appendChild(label);
             });
 
             const typeContainer = document.getElementById('typeFilters');
             uniqueTypes.forEach(typ => {
+                const checked = savedTypes == null ? true : savedTypes.has(typ);
                 const typeName = typeMap[typ] ? typeMap[typ].name : typ;
                 const label = document.createElement('label');
                 label.className = 'checkbox-label';
-                label.innerHTML = `<input type="checkbox" checked value="${typ}" onchange="renderSchedule()"> ${typeName} (${typ})`;
+                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(typ).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(typeName).replace(/&/g, '&amp;').replace(/</g, '&lt;')} (${String(typ).replace(/&/g, '&amp;')})`;
                 typeContainer.appendChild(label);
             });
+
+            if (saved && saved.myPlan && typeof saved.myPlan === 'object') {
+                Object.keys(saved.myPlan).forEach(k => {
+                    if (rawData.some(d => planKey(d) === k)) myPlan[k] = saved.myPlan[k];
+                });
+            }
         }
 
         // Helpery do przycisków "Wszystkie/Żadne"
@@ -661,6 +690,7 @@
             });
 
             updateUnselectedSummary(activeSubjects, activeTypes);
+            saveOptions();
         }
 
         // Algorytm układania (ten sam co wcześniej)
@@ -717,9 +747,9 @@
             if (e.target === modal) modal.style.display = 'none';
         }
 
-        // Start
+        // Start (przywróć z localStorage; jeśli brak zapisanych grup, domyślnie zaznacz Wykłady)
         initFilters();
-        selectAllWykład();
+        if (Object.keys(myPlan).length === 0) selectAllWykład();
         renderSchedule();
 
     </script>
