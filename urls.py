@@ -35,6 +35,11 @@ PLANS = {
         "II stopień, 1 Sem": ("2S_sem1", "L"),
         "II stopień, 2 Sem": ("2S_sem2", "Z"),
         "II stopień, 3 Sem": ("2S_sem3", "L"),
+    },
+    "ntwk": {
+        "prefix": "230-NTK",
+        "I Stopień, 4 Sem": ("1S_sem4", "L"),
+        "I Stopień, 4 Sem, Ścieżka Chemiczna": ("1S_sem4_AK", "L"),
     }
 }
 
