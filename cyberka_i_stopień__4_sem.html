@@ -258,58 +258,6 @@
             z-index: 2;
         }
 
-        /* MODAL */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(2px);
-        }
-
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border-left: 6px solid #333;
-            animation: slideDown 0.2s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close-btn {
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            border: none;
-            background: #eee;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .close-btn:hover {
-            background: #ddd;
-        }
     </style>
 </head>
 
@@ -344,7 +292,7 @@
 
     </div>
 
-    <p class="schedule-hint" style="font-size: 0.85rem; color: #666; margin: 0 0 12px 0;">Kliknij kafelek, aby wybrać grupę z przedmiotu (reszta planu się przyciemni). Kliknij ponownie, aby odznaczyć. Dwuklik = szczegóły zajęć.</p>
+    <p class="schedule-hint" style="font-size: 0.85rem; color: #666; margin: 0 0 12px 0;">Kliknij kafelek, aby wybrać grupę z przedmiotu (reszta planu się przyciemni). Kliknij ponownie, aby odznaczyć.</p>
 
     <div id="unselectedSummary" class="unselected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #fff8e1; border: 1px solid #ffca28; border-radius: 6px; color: #5d4e37;"></div>
     <div id="allSelectedSummary" class="all-selected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #e8f5e9; border: 1px solid #81c784; border-radius: 6px; color: #2e7d32;"></div>
@@ -363,23 +311,6 @@
         <div class="day-col" id="col-Środa"></div>
         <div class="day-col" id="col-Czwartek"></div>
         <div class="day-col" id="col-Piątek"></div>
-    </div>
-
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content" id="modalCard">
-            <h2 id="mName" style="margin-top:0; margin-bottom:10px; font-size:1.1rem;">Nazwa</h2>
-            <div style="line-height: 1.6; font-size: 0.9rem;">
-                <strong>Godziny:</strong> <span id="mHours"></span><br>
-                <strong>Typ:</strong> <span id="mType"></span><br>
-                <strong>Grupa:</strong> <span id="mGroup"></span><br>
-                <strong>Sala:</strong> <span id="mRoom"></span><br>
-                <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
-                <strong>ECTS:</strong> <span id="mEcts"></span><br>
-                <strong>Status:</strong> <span id="mStatus"></span><br>
-                <strong>Weryfikacja:</strong> <span id="mVerify"></span>
-            </div>
-            <button class="close-btn" onclick="document.getElementById('modal').style.display='none'">Zamknij</button>
-        </div>
     </div>
 
     <script>
@@ -420,8 +351,8 @@
             { day: "Piątek", start: "12:45", end: "14:15", subject: "Wykrywanie incydentów", type: "CWL", group: "3", room: "113, bud. B9" },
             { day: "Piątek", start: "12:45", end: "15:00", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "2", room: "113, bud. B9" },
             { day: "Piątek", start: "15:00", end: "17:15", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "3", room: "113, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "16:30", subject: "Wykrywanie incydentów", type: "CWL", group: "1", room: "105, bud. D6" },
             { day: "Piątek", start: "15:00", end: "17:15", subject: "Analiza złośliwego oprogramowania", type: "CWP", group: "1", room: "113, bud. B9" },
+            { day: "Piątek", start: "15:00", end: "16:30", subject: "Wykrywanie incydentów", type: "CWL", group: "1", room: "105, bud. D6" },
             { day: "Piątek", start: "17:15", end: "19:30", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "4", room: "113, bud. B9" },
             { day: "Piątek", start: "17:15", end: "19:30", subject: "Analiza złośliwego oprogramowania", type: "CWP", group: "2", room: "113, bud. B9" },
         ];
@@ -665,7 +596,6 @@
                     `;
 
                     el.onclick = (e) => { e.preventDefault(); toggleMyPlan(ev); };
-                    el.ondblclick = (e) => { e.preventDefault(); e.stopPropagation(); showModal(ev); };
                     container.appendChild(el);
                 });
             });
@@ -704,28 +634,6 @@
                 ev.widthPercent = 98 / totalCols;
                 ev.leftPercent = 1 + (ev.colIndex * ev.widthPercent);
             });
-        }
-
-        // --- 5. MODAL ---
-        const modal = document.getElementById('modal');
-        const modalCard = document.getElementById('modalCard');
-
-        function showModal(ev) {
-            document.getElementById('mName').innerText = ev.subject;
-            document.getElementById('mHours').innerText = `${ev.start} - ${ev.end}`;
-            document.getElementById('mType').innerText = ev.typeMeta.name;
-            document.getElementById('mGroup').innerText = ev.group;
-            let cleanRoom = ev.room.replace(/[()]/g, '');
-            document.getElementById('mRoom').innerText = cleanRoom;
-            document.getElementById('mEcts').innerText = ev.meta.ects;
-            document.getElementById('mStatus').innerText = ev.meta.status;
-            document.getElementById('mVerify').innerText = ev.meta.verify;
-            modalCard.style.borderLeftColor = ev.typeMeta.color;
-            modal.style.display = 'flex';
-        }
-
-        modal.onclick = (e) => {
-            if (e.target === modal) modal.style.display = 'none';
         }
 
         // Start (przywróć z localStorage; jeśli brak zapisanych grup, domyślnie zaznacz Wykłady)
