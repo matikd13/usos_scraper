@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Zajęć - Filtrowanie</title>
+    <style>
+        :root {
+            --cell-height: 55px;
+            --badge-w: #d32f2f;
+            --badge-l: #2e7d32;
+            --badge-p: #ef6c00;
+            --badge-c: #1565c0;
+            --badge-grp: #546e7a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        /* --- PANEL FILTRÓW --- */
+        .filters-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+        }
+
+        .filter-header {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-actions button {
+            background: none;
+            border: none;
+            color: #1565c0;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin-left: 10px;
+        }
+
+        .checkbox-list {
+            max-height: 150px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        /* Styl Scrollbara */
+        .checkbox-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .checkbox-list::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .checkbox-label {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-label input {
+            margin-right: 8px;
+        }
+
+        .checkbox-label:hover {
+            color: #000;
+        }
+
+        /* --- GŁÓWNY LAYOUT --- */
+        .schedule-wrapper {
+            min-width: 1300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: 50px repeat(5, 1fr);
+            grid-template-rows: 50px 1fr;
+            position: relative;
+            height: 950px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .header-cell {
+            background: #34495e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 20;
+        }
+
+        .time-col {
+            background: #fafafa;
+            border-right: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .day-col {
+            position: relative;
+            background: #fff;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .hour-mark {
+            position: absolute;
+            width: 100%;
+            height: var(--cell-height);
+            border-bottom: 1px dashed #f0f0f0;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .time-col .hour-mark {
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 0.75rem;
+            color: #888;
+            padding-top: 4px;
+        }
+
+        /* --- KAFELEK --- */
+        .event {
+            position: absolute;
+            border-radius: 6px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            overflow: hidden;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 18px 4px 14px 4px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .event:hover {
+            transform: scale(1.02);
+            z-index: 100 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .event.event-dimmed {
+            opacity: 0.32;
+        }
+
+        .event.event-dimmed:hover {
+            opacity: 0.5;
+        }
+
+        .event.event-my-plan {
+            box-shadow: 0 0 0 3px #1565c0;
+        }
+
+        .subject-name {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 1.2;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        .event-time {
+            position: absolute;
+            bottom: 2px;
+            right: 5px;
+            font-size: 0.65rem;
+            color: #444;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+
+        .group-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 1px 6px;
+            height: 18px;
+            background-color: var(--badge-grp);
+            color: white;
+            font-weight: 600;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom-right-radius: 6px;
+            z-index: 2;
+        }
+
+        .type-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom-left-radius: 6px;
+            z-index: 2;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-left: 6px solid #333;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            background: #eee;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Plan Zajęć Semestralnych</h1>
+
+    <div class="filters-container">
+        <div class="filter-group">
+            <div class="filter-header">
+                Przedmioty
+                <div class="filter-actions">
+                    <button onclick="toggleAll('subject', true)">Wszystkie</button>
+                    <button onclick="toggleAll('subject', false)">Żadne</button>
+                </div>
+            </div>
+            <div class="checkbox-list" id="subjectFilters">
+            </div>
+        </div>
+
+        <div class="filter-group" style="min-width: 150px;">
+            <div class="filter-header">
+                Typ Zajęć
+                <div class="filter-actions">
+                    <button onclick="toggleAll('type', true)">Wszystkie</button>
+                    <button onclick="toggleAll('type', false)">Żadne</button>
+                </div>
+            </div>
+            <div class="checkbox-list" id="typeFilters">
+            </div>
+        </div>
+
+    </div>
+
+    <p class="schedule-hint" style="font-size: 0.85rem; color: #666; margin: 0 0 12px 0;">Kliknij kafelek, aby wybrać grupę z przedmiotu (reszta planu się przyciemni). Kliknij ponownie, aby odznaczyć. Dwuklik = szczegóły zajęć.</p>
+
+    <div id="unselectedSummary" class="unselected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #fff8e1; border: 1px solid #ffca28; border-radius: 6px; color: #5d4e37;"></div>
+    <div id="allSelectedSummary" class="all-selected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #e8f5e9; border: 1px solid #81c784; border-radius: 6px; color: #2e7d32;"></div>
+
+    <div class="schedule-wrapper">
+        <div class="header-cell">Godz</div>
+        <div class="header-cell">Poniedziałek</div>
+        <div class="header-cell">Wtorek</div>
+        <div class="header-cell">Środa</div>
+        <div class="header-cell">Czwartek</div>
+        <div class="header-cell">Piątek</div>
+
+        <div class="time-col" id="timeColumn"></div>
+        <div class="day-col" id="col-Poniedziałek"></div>
+        <div class="day-col" id="col-Wtorek"></div>
+        <div class="day-col" id="col-Środa"></div>
+        <div class="day-col" id="col-Czwartek"></div>
+        <div class="day-col" id="col-Piątek"></div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content" id="modalCard">
+            <h2 id="mName" style="margin-top:0; margin-bottom:10px; font-size:1.1rem;">Nazwa</h2>
+            <div style="line-height: 1.6; font-size: 0.9rem;">
+                <strong>Godziny:</strong> <span id="mHours"></span><br>
+                <strong>Typ:</strong> <span id="mType"></span><br>
+                <strong>Grupa:</strong> <span id="mGroup"></span><br>
+                <strong>Sala:</strong> <span id="mRoom"></span><br>
+                <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+                <strong>ECTS:</strong> <span id="mEcts"></span><br>
+                <strong>Status:</strong> <span id="mStatus"></span><br>
+                <strong>Weryfikacja:</strong> <span id="mVerify"></span>
+            </div>
+            <button class="close-btn" onclick="document.getElementById('modal').style.display='none'">Zamknij</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DANE Z PLIKU FIXED.CSV ---
+        const rawData = [
+            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "1", room: "012, bud. B9" },
+            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "4", room: "102, bud. B9" },
+            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "2", room: "012, bud. B9" },
+            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "4", room: "102, bud. B9" },
+            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "3", room: "012, bud. B9" },
+            { day: "Poniedziałek", start: "13:15", end: "14:45", subject: "Ewolucja sieci", type: "CWP", group: "1", room: "012, bud. B9" },
+            { day: "Poniedziałek", start: "15:00", end: "16:30", subject: "Zarządzanie i ekonomia projektów", type: "W", group: "1", room: "on-line, bud. A0" },
+            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "W", group: "1", room: "on-line, bud. A0" },
+            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Metody symulacyjne", type: "CWA", group: "2", room: "011, bud. B9" },
+            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Metody symulacyjne", type: "CWP", group: "3", room: "011, bud. B9" },
+            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "1", room: "102, bud. B9" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Ewolucja sieci", type: "CWP", group: "3", room: "010, bud. B9" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Metody symulacyjne", type: "CWP", group: "2", room: "111, bud. B9" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "1", room: "102, bud. B9" },
+            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Matematyka w analizie sieci i systemów", type: "CWA", group: "2", room: "010, bud. B9" },
+            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Metody symulacyjne", type: "CWP", group: "1", room: "111, bud. B9" },
+            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Ewolucja sieci", type: "W", group: "1", room: "201, bud. D6" },
+            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Matematyka w analizie sieci i systemów", type: "W", group: "1", room: "201, bud. D6" },
+            { day: "Środa", start: "08:00", end: "09:30", subject: "Metody symulacyjne", type: "CWA", group: "3", room: "011, bud. B9" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "3", room: "102, bud. B9" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Ewolucja sieci", type: "CWP", group: "2", room: "103, bud. B9" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Metody symulacyjne", type: "CWA", group: "1", room: "011, bud. B9" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "4", room: "207, bud. B9" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "3", room: "102, bud. B9" },
+            { day: "Środa", start: "13:15", end: "14:45", subject: "Jakość obsługi w sieciach", type: "CWP", group: "1", room: "102, bud. B9" },
+            { day: "Środa", start: "15:00", end: "16:30", subject: "Jakość obsługi w sieciach", type: "CWP", group: "2", room: "010, bud. B9" },
+            { day: "Środa", start: "16:45", end: "18:15", subject: "Jakość obsługi w sieciach", type: "CWP", group: "3", room: "010, bud. B9" },
+            { day: "Czwartek", start: "08:00", end: "09:30", subject: "Jakość obsługi w sieciach", type: "W", group: "1", room: "010, bud. B9" },
+            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "4", room: "3.16, bud. C7" },
+            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "3", room: "3.17, bud. C7" },
+            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "2", room: "3.17, bud. C7" },
+            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "1", room: "3.16, bud. C7" },
+            { day: "Czwartek", start: "17:00", end: "18:30", subject: "Matematyka w analizie sieci i systemów", type: "CWA", group: "1", room: "012, bud. B9" },
+            { day: "Piątek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "2", room: "102, bud. B9" },
+            { day: "Piątek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "2", room: "102, bud. B9" },
+        ];
+
+        // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
+        const metaData = {
+            "Bezpieczeństwo sieci korporacyjnych": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo si...", color: "#e3f2fd" },
+            "Ewolucja sieci": { ects: "?", status: "?", verify: "?", short: "Ewolucja sieci", color: "#ffe0b2" },
+            "Jakość obsługi w sieciach": { ects: "?", status: "?", verify: "?", short: "Jako\u015b\u0107 obs\u0142ugi w ...", color: "#c8e6c9" },
+            "Komunikacja i myślenie projektowe": { ects: "?", status: "?", verify: "?", short: "Komunikacja i my\u015b...", color: "#fff9c4" },
+            "Matematyka w analizie sieci i systemów": { ects: "?", status: "?", verify: "?", short: "Matematyka w anal...", color: "#e1bee7" },
+            "Metody symulacyjne": { ects: "?", status: "?", verify: "?", short: "Metody symulacyjne", color: "#b2dfdb" },
+            "Zarządzanie i ekonomia projektów": { ects: "?", status: "?", verify: "?", short: "Zarz\u0105dzanie i eko...", color: "#f0f4c3" },
+        };
+
+        const typeMap = {
+            "CWL": { badge: "L", color: "var(--badge-l)", name: "Laboratorium" },
+            "W": { badge: "W", color: "var(--badge-w)", name: "Wykład" },
+            "CWP": { badge: "P", color: "var(--badge-p)", name: "Projekt" },
+            "CWA": { badge: "C", color: "var(--badge-c)", name: "Ćwiczenia" },
+            "KONW": { badge: "K", color: "var(--badge-c)", name: "Konwersatorium" }
+        };
+
+        function timeToMinutes(t) {
+            const [h, m] = t.split(':').map(Number);
+            return h * 60 + m;
+        }
+
+        // --- 3. GENEROWANIE SIATKI ---
+        const startHour = 7;
+        const cellHeight = 55; // px
+
+        const timeCol = document.getElementById('timeColumn');
+        for (let i = 7; i <= 21; i++) {
+            const div = document.createElement('div');
+            div.className = 'hour-mark';
+            div.style.top = (i - startHour) * cellHeight + 'px';
+            if (timeCol) div.innerText = i + ":00";
+            timeCol.appendChild(div);
+            document.querySelectorAll('.day-col').forEach(col => {
+                const line = div.cloneNode(true);
+                line.innerText = '';
+                col.appendChild(line);
+            });
+        }
+
+        // --- 4. LOGIKA FILTROWANIA I RENDEROWANIA ---
+
+        // Moja grupa: klik w kafelek = wybór tej grupy dla (przedmiot, typ). Np. lab gr.1, projekt gr.2 osobno.
+        const myPlan = {}; // "subject|type" -> group
+
+        const STORAGE_KEY = 'usos_timetable_' + (location.pathname || '/').replace(/^\/$/, 'index').replace(/^\//, '').replace(/\//g, '_') || 'index';
+
+        function loadOptions() {
+            try {
+                const s = localStorage.getItem(STORAGE_KEY);
+                return s ? JSON.parse(s) : null;
+            } catch (e) { return null; }
+        }
+
+        function saveOptions() {
+            const activeSubjects = Array.from(document.querySelectorAll('#subjectFilters input:checked')).map(cb => cb.value);
+            const activeTypes = Array.from(document.querySelectorAll('#typeFilters input:checked')).map(cb => cb.value);
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({ activeSubjects, activeTypes, myPlan: { ...myPlan } }));
+            } catch (e) { /* quota or private mode */ }
+        }
+
+        function planKey(ev) {
+            return ev.subject + "|" + ev.type;
+        }
+
+        function toggleMyPlan(ev) {
+            const key = planKey(ev);
+            if (myPlan[key] === ev.group) {
+                delete myPlan[key];
+            } else {
+                myPlan[key] = ev.group;
+            }
+            renderSchedule();
+        }
+
+        // Przy starcie: automatycznie zaznacz wszystkie Wykłady (W)
+        function selectAllWykład() {
+            rawData.forEach(d => {
+                if (d.type === 'W') {
+                    myPlan[d.subject + '|W'] = d.group;
+                }
+            });
+        }
+
+        // Które przedmioty/typy nie mają jeszcze wybranej grupy (z uwzgl. aktywnych filtrów)
+        function updateUnselectedSummary(activeSubjects, activeTypes) {
+            const subjectTypes = {}; // subject -> Set of types (from filtered data)
+            rawData.forEach(d => {
+                if (!activeSubjects.includes(d.subject) || !activeTypes.includes(d.type)) return;
+                if (!subjectTypes[d.subject]) subjectTypes[d.subject] = new Set();
+                subjectTypes[d.subject].add(d.type);
+            });
+            const missing = []; // { subject, types: [] }
+            Object.keys(subjectTypes).sort().forEach(subj => {
+                const types = subjectTypes[subj];
+                const notChosen = [...types].filter(t => !myPlan[subj + "|" + t]);
+                if (notChosen.length > 0) {
+                    const typeNames = notChosen.map(t => typeMap[t] ? typeMap[t].name : t).join(", ");
+                    missing.push({ subject: subj, types: typeNames });
+                }
+            });
+            const unselEl = document.getElementById('unselectedSummary');
+            const allEl = document.getElementById('allSelectedSummary');
+            if (missing.length > 0) {
+                unselEl.style.display = 'block';
+                allEl.style.display = 'none';
+                unselEl.innerHTML = '<strong>Nie wybrano jeszcze grupy dla:</strong> ' +
+                    missing.map(m => m.subject + ' <span style="color:#795548">(' + m.types + ')</span>').join(', ');
+            } else {
+                unselEl.style.display = 'none';
+                allEl.style.display = 'block';
+                allEl.textContent = '✓ Wszystkie przedmioty mają wybraną grupę.';
+            }
+        }
+
+        // Pobierz unikalne wartości do filtrów
+        const uniqueSubjects = [...new Set(rawData.map(d => d.subject))].sort();
+        const uniqueTypes = [...new Set(rawData.map(d => d.type))].sort();
+
+        // Inicjalizacja filtrów (przywraca zaznaczenia z localStorage)
+        function initFilters() {
+            const saved = loadOptions();
+            const savedSubjects = saved && saved.activeSubjects ? new Set(saved.activeSubjects) : null;
+            const savedTypes = saved && saved.activeTypes ? new Set(saved.activeTypes) : null;
+
+            const subContainer = document.getElementById('subjectFilters');
+            uniqueSubjects.forEach(sub => {
+                const checked = savedSubjects == null ? true : savedSubjects.has(sub);
+                const label = document.createElement('label');
+                label.className = 'checkbox-label';
+                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(sub).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(sub).replace(/&/g, '&amp;').replace(/</g, '&lt;')}`;
+                subContainer.appendChild(label);
+            });
+
+            const typeContainer = document.getElementById('typeFilters');
+            uniqueTypes.forEach(typ => {
+                const checked = savedTypes == null ? true : savedTypes.has(typ);
+                const typeName = typeMap[typ] ? typeMap[typ].name : typ;
+                const label = document.createElement('label');
+                label.className = 'checkbox-label';
+                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(typ).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(typeName).replace(/&/g, '&amp;').replace(/</g, '&lt;')} (${String(typ).replace(/&/g, '&amp;')})`;
+                typeContainer.appendChild(label);
+            });
+
+            if (saved && saved.myPlan && typeof saved.myPlan === 'object') {
+                Object.keys(saved.myPlan).forEach(k => {
+                    if (rawData.some(d => planKey(d) === k)) myPlan[k] = saved.myPlan[k];
+                });
+            }
+        }
+
+        // Helpery do przycisków "Wszystkie/Żadne"
+        function toggleAll(type, checked) {
+            const container = type === 'subject' ? document.getElementById('subjectFilters') : document.getElementById('typeFilters');
+            const inputs = container.querySelectorAll('input');
+            inputs.forEach(inp => inp.checked = checked);
+            renderSchedule();
+        }
+
+        // Główna funkcja renderująca
+        function renderSchedule() {
+            // 1. Pobierz aktywne filtry
+            const activeSubjects = Array.from(document.querySelectorAll('#subjectFilters input:checked')).map(cb => cb.value);
+            const activeTypes = Array.from(document.querySelectorAll('#typeFilters input:checked')).map(cb => cb.value);
+
+            // 2. Wyczyść kolumny
+            document.querySelectorAll('.day-col .event').forEach(el => el.remove());
+
+            // 3. Filtruj dane
+            const filteredData = rawData.filter(item =>
+                activeSubjects.includes(item.subject) && activeTypes.includes(item.type)
+            );
+
+            // 4. Grupuj wg dnia
+            const eventsByDay = { "Poniedziałek": [], "Wtorek": [], "Środa": [], "Czwartek": [], "Piątek": [] };
+
+            filteredData.forEach(item => {
+                const startMin = timeToMinutes(item.start);
+                const endMin = timeToMinutes(item.end);
+                const top = (startMin - (startHour * 60)) / 60 * cellHeight;
+                const durationMin = endMin - startMin;
+                const height = (durationMin / 60) * cellHeight;
+
+                const parsed = {
+                    ...item,
+                    top: top,
+                    height: height,
+                    startMin: startMin,
+                    endMin: endMin,
+                    durationMin: durationMin,
+                    meta: metaData[item.subject] || { ects: "?", status: "?", verify: "?", short: item.subject, color: "#eee" },
+                    typeMeta: typeMap[item.type] || { badge: "?", color: "#333", name: item.type }
+                };
+                if (eventsByDay[item.day]) eventsByDay[item.day].push(parsed);
+            });
+
+            // 5. Oblicz layout (overlaps) i rysuj
+            Object.keys(eventsByDay).forEach(day => {
+                const dayEvents = eventsByDay[day];
+                layoutDay(dayEvents); // Przelicz pozycje tylko dla widocznych!
+
+                const container = document.getElementById('col-' + day);
+                const hasMyPlan = Object.keys(myPlan).length > 0;
+
+                dayEvents.forEach(ev => {
+                    const el = document.createElement('div');
+                    el.className = 'event';
+                    el.style.top = ev.top + 'px';
+                    el.style.height = ev.height + 'px';
+                    el.style.width = ev.widthPercent + '%';
+                    el.style.left = ev.leftPercent + '%';
+                    el.style.backgroundColor = ev.meta.color;
+                    el.style.zIndex = 5 + ev.colIndex;
+
+                    const isInMyPlan = myPlan[planKey(ev)] === ev.group;
+                    if (hasMyPlan && !isInMyPlan) {
+                        el.classList.add('event-dimmed');
+                    }
+                    if (isInMyPlan) {
+                        el.classList.add('event-my-plan');
+                    }
+
+                    let nameStyle = '';
+                    if (ev.durationMin <= 45) {
+                        nameStyle = 'font-size: 0.65rem; line-height: 1.0;';
+                    }
+
+                    el.innerHTML = `
+                        <div class="group-badge">Gr. ${ev.group}</div>
+                        <div class="type-badge" style="background-color: ${ev.typeMeta.color}">${ev.typeMeta.badge}</div>
+                        <div class="subject-name" style="${nameStyle}">${ev.meta.short}</div>
+                        <div class="event-time">${ev.start} - ${ev.end}</div>
+                    `;
+
+                    el.onclick = (e) => { e.preventDefault(); toggleMyPlan(ev); };
+                    el.ondblclick = (e) => { e.preventDefault(); e.stopPropagation(); showModal(ev); };
+                    container.appendChild(el);
+                });
+            });
+
+            updateUnselectedSummary(activeSubjects, activeTypes);
+            saveOptions();
+        }
+
+        // Algorytm układania (ten sam co wcześniej)
+        function layoutDay(events) {
+            events.sort((a, b) => (a.startMin - b.startMin) || (b.endMin - a.endMin));
+            const columns = [];
+            events.forEach(ev => {
+                let placed = false;
+                for (let i = 0; i < columns.length; i++) {
+                    const lastInCol = columns[i][columns[i].length - 1];
+                    if (ev.startMin >= lastInCol.endMin) {
+                        columns[i].push(ev);
+                        ev.colIndex = i;
+                        placed = true;
+                        break;
+                    }
+                }
+                if (!placed) {
+                    columns.push([ev]);
+                    ev.colIndex = columns.length - 1;
+                }
+            });
+            events.forEach(ev => {
+                const overlapping = events.filter(other =>
+                    other !== ev && !(other.endMin <= ev.startMin || other.startMin >= ev.endMin)
+                );
+                let maxCol = ev.colIndex;
+                overlapping.forEach(o => { if (o.colIndex > maxCol) maxCol = o.colIndex; });
+                const totalCols = maxCol + 1;
+                ev.widthPercent = 98 / totalCols;
+                ev.leftPercent = 1 + (ev.colIndex * ev.widthPercent);
+            });
+        }
+
+        // --- 5. MODAL ---
+        const modal = document.getElementById('modal');
+        const modalCard = document.getElementById('modalCard');
+
+        function showModal(ev) {
+            document.getElementById('mName').innerText = ev.subject;
+            document.getElementById('mHours').innerText = `${ev.start} - ${ev.end}`;
+            document.getElementById('mType').innerText = ev.typeMeta.name;
+            document.getElementById('mGroup').innerText = ev.group;
+            let cleanRoom = ev.room.replace(/[()]/g, '');
+            document.getElementById('mRoom').innerText = cleanRoom;
+            document.getElementById('mEcts').innerText = ev.meta.ects;
+            document.getElementById('mStatus').innerText = ev.meta.status;
+            document.getElementById('mVerify').innerText = ev.meta.verify;
+            modalCard.style.borderLeftColor = ev.typeMeta.color;
+            modal.style.display = 'flex';
+        }
+
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        }
+
+        // Start (przywróć z localStorage; jeśli brak zapisanych grup, domyślnie zaznacz Wykłady)
+        initFilters();
+        if (Object.keys(myPlan).length === 0) selectAllWykład();
+        renderSchedule();
+
+    </script>
+
+</body>
+
+</html>
