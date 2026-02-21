@@ -25,10 +25,10 @@ def slug(s: str) -> str:
     return re.sub(r"[^\w\-]", "_", s.strip().lower()).strip("_") or "page"
 
 
-def load_urls_dict(path: Path) -> list[tuple[str, str, str]]:
+def load_urls_dict(path: Path) -> tuple[list[tuple[str, str, str]], str]:
     """
     Load URLS from a Python module (dict: program -> year -> url).
-    Return sorted list of (program, year, url) for stable ordering.
+    Return (sorted list of (program, year, url), YEAR from module or "").
     """
     import importlib.util
     spec = importlib.util.spec_from_file_location("urls_module", path)
@@ -39,6 +39,7 @@ def load_urls_dict(path: Path) -> list[tuple[str, str, str]]:
     urls_map = getattr(mod, "URLS", None)
     if not isinstance(urls_map, dict):
         raise SystemExit(f"{path} must define URLS = {{ program: {{ year: url, ... }}, ... }}")
+    year_label = getattr(mod, "YEAR", "") or ""
 
     entries = []
     for program, years in urls_map.items():
@@ -49,7 +50,7 @@ def load_urls_dict(path: Path) -> list[tuple[str, str, str]]:
                 entries.append((program, year, url))
     # Sort by program, then year
     entries.sort(key=lambda e: (e[0].lower(), e[1].lower()))
-    return entries
+    return entries, year_label
 
 
 def output_filename(program: str, year: str) -> str:
@@ -106,7 +107,7 @@ def main() -> None:
     if not template_path.is_file():
         raise SystemExit(f"Template not found: {template_path}")
 
-    entries = load_urls_dict(urls_path)
+    entries, year_label = load_urls_dict(urls_path)
     out_dir.mkdir(parents=True, exist_ok=True)
     if not entries:
         print("No URLs in urls.py (URLS dict empty or no valid program/year/url entries).")
@@ -125,24 +126,27 @@ def main() -> None:
             ok += 1
             built.append((program, year, name))
 
-    index_html = """<!DOCTYPE html>
+    year_escaped = html.escape(year_label)
+    year_line = f'    <p class="year">Rok akademicki: {year_escaped}</p>\n' if year_label else ""
+    index_html = f"""<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plany zajęć</title>
     <style>
-        body { font-family: system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
-        h1 { font-weight: 600; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 0.5rem 0; }
-        a { color: #1565c0; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        body {{ font-family: system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }}
+        h1 {{ font-weight: 600; }}
+        .year {{ color: #666; font-size: 0.95rem; margin-bottom: 1rem; }}
+        ul {{ list-style: none; padding: 0; }}
+        li {{ margin: 0.5rem 0; }}
+        a {{ color: #1565c0; text-decoration: none; }}
+        a:hover {{ text-decoration: underline; }}
     </style>
 </head>
 <body>
     <h1>Plany zajęć</h1>
-    <ul>
+{year_line}    <ul>
 """
     for program, year, name in built:
         index_html += f'        <li><a href="{html.escape(name)}">{html.escape(program)} – {html.escape(year)}</a></li>\n'

@@ -10,7 +10,7 @@ def plan_url(prefix: str, grupa_part: str, term: str = "Z") -> str:
 
 
 PLANS = {
-    "teleinformatyka": {
+    "teleinfa": {
         "prefix": "230-TEI",
         "I Stopień, 1 Sem": ("1S_sem1", "Z"),
         "I Stopień, 2 Sem": ("1S_sem2", "L"),
@@ -23,6 +23,19 @@ PLANS = {
         "II stopień, 2 Sem": ("2S_sem2", "Z"),
         "II stopień, 3 Sem": ("2S_sem3", "L"),
     },
+    "cyberka": {
+        "prefix": "230-CBZ",
+        "I Stopień, 1 Sem": ("1S_sem1", "Z"),
+        "I Stopień, 2 Sem": ("1S_sem2", "L"),
+        "I Stopień, 3 Sem": ("1S_sem3", "Z"),
+        "I Stopień, 4 Sem": ("1S_sem4", "L"),
+        "I Stopień, 5 Sem": ("1S_sem5", "Z"),
+        "I Stopień, 6 Sem": ("1S_sem6", "L"),
+        "I Stopień, 7 Sem": ("1S_sem7", "Z"),
+        "II stopień, 1 Sem": ("2S_sem1", "L"),
+        "II stopień, 2 Sem": ("2S_sem2", "Z"),
+        "II stopień, 3 Sem": ("2S_sem3", "L"),
+    }
 }
 
 URLS = {
