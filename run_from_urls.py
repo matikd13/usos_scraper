@@ -7,6 +7,7 @@ Requires: requests (pip install requests)
 """
 
 import re
+import html
 import subprocess
 import argparse
 from pathlib import Path
@@ -115,13 +116,42 @@ def main() -> None:
         )
         return
     ok = 0
+    built = []  # (program, year, filename) for index
     for program, year, url in entries:
         name = output_filename(program, year)
         output_path = out_dir / name
         print(f"  {program} / {year} -> {output_path.name}")
         if fetch_and_build(url, output_path, template_path):
             ok += 1
-    print(f"Built {ok}/{len(entries)} timetables in {out_dir}")
+            built.append((program, year, name))
+
+    index_html = """<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plany zajęć</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { font-weight: 600; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 0.5rem 0; }
+        a { color: #1565c0; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Plany zajęć</h1>
+    <ul>
+"""
+    for program, year, name in built:
+        index_html += f'        <li><a href="{html.escape(name)}">{html.escape(program)} – {html.escape(year)}</a></li>\n'
+    index_html += """    </ul>
+</body>
+</html>
+"""
+    (out_dir / "index.html").write_text(index_html, encoding="utf-8")
+    print(f"Built {ok}/{len(entries)} timetables in {out_dir}; wrote index.html")
 
 
 if __name__ == "__main__":
