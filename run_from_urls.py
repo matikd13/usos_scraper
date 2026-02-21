@@ -142,6 +142,7 @@ def main() -> None:
         li {{ margin: 0.5rem 0; }}
         a {{ color: #1565c0; text-decoration: none; }}
         a:hover {{ text-decoration: underline; }}
+        .repo {{ margin-top: 2rem; font-size: 0.9rem; color: #666; }}
     </style>
 </head>
 <body>
@@ -151,6 +152,7 @@ def main() -> None:
     for program, year, name in built:
         index_html += f'        <li><a href="{html.escape(name)}">{html.escape(program)} – {html.escape(year)}</a></li>\n'
     index_html += """    </ul>
+    <p class="repo"><a href="https://github.com/matikd13/usos_scraper">Repo na GitHub</a></p>
 </body>
 </html>
 """
