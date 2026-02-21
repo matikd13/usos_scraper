@@ -316,48 +316,20 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Analiza matematyczna", type: "CWA", group: "2", room: "012, bud. B9" },
-            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Analiza matematyczna", type: "CWA", group: "1", room: "010, bud. B9" },
-            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Wprowadzenie do sieci Internet", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Poniedziałek", start: "13:15", end: "14:45", subject: "Algebra", type: "W", group: "1", room: "1, bud. D5" },
-            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Wprowadzenie do prawa karnego i postępowania karnego", type: "W", group: "1", room: "online, bud. online" },
-            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Wprowadzenie do prawa karnego i postępowania karnego", type: "CWA", group: "2", room: "online, bud. online" },
-            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Wprowadzenie do prawa karnego i postępowania karnego", type: "CWA", group: "1", room: "online, bud. online" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Algebra", type: "CWA", group: "2", room: "4.16, bud. C7" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Architektura komputerów i systemy operacyjne", type: "CWL", group: "1", room: "102, bud. B9" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Architektura komputerów i systemy operacyjne", type: "CWL", group: "4", room: "102, bud. B9" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Wstęp do informatyki", type: "CWL", group: "1", room: "426, bud. C2" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Wprowadzenie do sieci Internet", type: "CWL", group: "4", room: "111, bud. B9" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Wstęp do informatyki", type: "CWL", group: "3", room: "426, bud. C2" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Analiza matematyczna", type: "CWA", group: "1", room: "010, bud. B9" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Algebra", type: "CWA", group: "1", room: "1.9, bud. B7" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Algebra", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Środa", start: "08:00", end: "09:30", subject: "Architektura komputerów i systemy operacyjne", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Wprowadzenie do sieci Internet", type: "CWL", group: "1", room: "111, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Wprowadzenie do sieci Internet", type: "CWL", group: "2", room: "111, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Wprowadzenie do sieci Internet", type: "CWL", group: "3", room: "111, bud. B9" },
-            { day: "Środa", start: "16:30", end: "18:00", subject: "Krajowy system cyberbezpieczeństwa", type: "W", group: "1", room: "501, bud. C3" },
-            { day: "Czwartek", start: "08:00", end: "09:30", subject: "Architektura komputerów i systemy operacyjne", type: "CWL", group: "2", room: "102, bud. B9" },
-            { day: "Czwartek", start: "09:45", end: "11:15", subject: "Architektura komputerów i systemy operacyjne", type: "CWL", group: "3", room: "102, bud. B9" },
-            { day: "Czwartek", start: "11:30", end: "13:00", subject: "Analiza matematyczna", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Czwartek", start: "13:15", end: "14:45", subject: "Analiza matematyczna", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Czwartek", start: "15:00", end: "16:30", subject: "Algebra", type: "CWA", group: "2", room: "012, bud. B9" },
-            { day: "Czwartek", start: "15:00", end: "16:30", subject: "Wstęp do informatyki", type: "CWL", group: "2", room: "426, bud. C2" },
-            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Wstęp do informatyki", type: "CWL", group: "4", room: "426, bud. C2" },
-            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Algebra", type: "CWA", group: "1", room: "1.09, bud. C7" },
-            { day: "Piątek", start: "08:00", end: "09:30", subject: "Analiza matematyczna", type: "CWA", group: "2", room: "011, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "16:30", subject: "Wstęp do informatyki", type: "W", group: "1", room: "1, bud. D5" },
+            { day: "Wtorek", start: "08:00", end: "11:00", subject: "Podstawy funkcjonowania organizmów żywych", type: "CWL", group: "2", room: "131, bud. HB3B4" },
+            { day: "Wtorek", start: "08:00", end: "11:00", subject: "Biochemia związków toksycznych", type: "CWL", group: "2", room: "131, bud. HB3B4" },
+            { day: "Wtorek", start: "08:00", end: "11:00", subject: "Podstawy funkcjonowania organizmów żywych", type: "CWL", group: "1", room: "131, bud. HB3B4" },
+            { day: "Wtorek", start: "08:00", end: "11:00", subject: "Biochemia związków toksycznych", type: "CWL", group: "1", room: "131, bud. HB3B4" },
+            { day: "Środa", start: "08:00", end: "09:30", subject: "Współczesna biologia", type: "W", group: "1", room: "0.18, bud. B8" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Podstawy funkcjonowania organizmów żywych", type: "W", group: "1", room: "0.18, bud. B8" },
+            { day: "Środa", start: "13:15", end: "14:45", subject: "Biochemia związków toksycznych", type: "W", group: "1", room: "0.18, bud. B8" },
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            "Algebra": { ects: "?", status: "?", verify: "?", short: "Algebra", color: "#e3f2fd" },
-            "Analiza matematyczna": { ects: "?", status: "?", verify: "?", short: "Analiza matematyczna", color: "#ffe0b2" },
-            "Architektura komputerów i systemy operacyjne": { ects: "?", status: "?", verify: "?", short: "Architektura komp...", color: "#c8e6c9" },
-            "Krajowy system cyberbezpieczeństwa": { ects: "?", status: "?", verify: "?", short: "Krajowy system cy...", color: "#fff9c4" },
-            "Wprowadzenie do prawa karnego i postępowania karnego": { ects: "?", status: "?", verify: "?", short: "Wprowadzenie do p...", color: "#e1bee7" },
-            "Wprowadzenie do sieci Internet": { ects: "?", status: "?", verify: "?", short: "Wprowadzenie do s...", color: "#b2dfdb" },
-            "Wstęp do informatyki": { ects: "?", status: "?", verify: "?", short: "Wst\u0119p do informatyki", color: "#f0f4c3" },
+            "Biochemia związków toksycznych": { ects: "?", status: "?", verify: "?", short: "Biochemia zwi\u0105zk\u00f3...", color: "#e3f2fd" },
+            "Podstawy funkcjonowania organizmów żywych": { ects: "?", status: "?", verify: "?", short: "Podstawy funkcjon...", color: "#ffe0b2" },
+            "Współczesna biologia": { ects: "?", status: "?", verify: "?", short: "Wsp\u00f3\u0142czesna biologia", color: "#c8e6c9" },
         };
 
         const typeMap = {
