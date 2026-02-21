@@ -28,8 +28,7 @@ PLANS = {
 URLS = {
     program: {
         label: plan_url(data["prefix"], part, term)
-        for label, (part, term) in data.items()
-        if label != "prefix"
+        for label, (part, term) in (x for x in data.items() if x[0] != "prefix")
     }
     for program, data in PLANS.items()
 }
