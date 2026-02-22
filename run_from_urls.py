@@ -57,7 +57,13 @@ def output_filename(program: str, year: str) -> str:
     return f"{slug(program)}_{slug(year)}.html"
 
 
-def fetch_and_build(url: str, output_path: Path, template_path: Path) -> bool:
+def fetch_and_build(
+    url: str,
+    output_path: Path,
+    template_path: Path,
+    *,
+    plan_title: str = "Plan Zajęć",
+) -> bool:
     """Download URL to a temp file, run scrape_timetable, write to output_path. Return True on success."""
     try:
         r = requests.get(url, timeout=30, headers={"User-Agent": "USOS-scraper/1.0"})
@@ -78,6 +84,8 @@ def fetch_and_build(url: str, output_path: Path, template_path: Path) -> bool:
                 str(template_path),
                 "-o",
                 str(output_path),
+                "--title",
+                plan_title,
             ],
             check=True,
             cwd=str(SCRIPT_DIR),
@@ -122,7 +130,7 @@ def main() -> None:
         name = output_filename(program, year)
         output_path = out_dir / name
         print(f"  {program} / {year} -> {output_path.name}")
-        if fetch_and_build(url, output_path, template_path):
+        if fetch_and_build(url, output_path, template_path, plan_title=f"{program} – {year}"):
             ok += 1
             built.append((program, year, name))
 

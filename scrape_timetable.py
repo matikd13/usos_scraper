@@ -6,6 +6,7 @@ Requires: beautifulsoup4 (install with: uv add beautifulsoup4  or  pip install b
 """
 
 import re
+import html
 import json
 import argparse
 from pathlib import Path
@@ -167,9 +168,12 @@ def generate_readable_html(
     output_path: Path,
     *,
     inject_meta: bool = True,
+    plan_title: str = "Plan Zajęć",
 ) -> None:
     """Generate readable HTML from fix13 template with scraped rawData (and optional metaData)."""
     template = template_path.read_text(encoding="utf-8")
+
+    template = template.replace("__PLAN_TITLE__", html.escape(plan_title))
 
     raw_js = raw_data_to_js(events)
     raw_pattern = re.compile(
@@ -217,6 +221,11 @@ def main() -> None:
         action="store_true",
         help="Also write scraped events to a JSON file (readable_timetable.json)",
     )
+    parser.add_argument(
+        "--title",
+        default="Plan Zajęć",
+        help="Page title for the generated HTML (default: Plan Zajęć)",
+    )
     args = parser.parse_args()
 
     base = Path(__file__).resolve().parent
@@ -240,7 +249,7 @@ def main() -> None:
         )
         print(f"Wrote {json_path}")
 
-    generate_readable_html(events, template_path, output_path)
+    generate_readable_html(events, template_path, output_path, plan_title=args.title)
     print(f"Wrote {output_path}")
 
 
