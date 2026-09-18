@@ -316,57 +316,12 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Systemy i sieci komórkowe", type: "W", group: "1", room: "1, bud. D5" },
-            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Blok Język obcy - WIEiT 3/3", type: "LEKT", group: "1", room: "" },
-            { day: "Poniedziałek", start: "12:15", end: "13:45", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "W", group: "1", room: "online, bud. online" },
-            { day: "Poniedziałek", start: "14:00", end: "15:30", subject: "Wprowadzenie do białego wywiadu", type: "W", group: "1", room: "online, bud. online" },
-            { day: "Poniedziałek", start: "17:15", end: "18:45", subject: "Prywatność i ochrona danych osobowych", type: "W", group: "1", room: "online, bud. online" },
-            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Bezpieczeństwo oprogramowania", type: "W", group: "1", room: "417, bud. D8" },
-            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Systemy i sieci komórkowe", type: "CWL", group: "1", room: "112, bud. B9" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo oprogramowania", type: "CWL", group: "1", room: "212, bud. B5" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Bezpieczeństwo oprogramowania", type: "CWL", group: "2", room: "212, bud. B5" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Bezpieczeństwo oprogramowania", type: "CWL", group: "3", room: "221, bud. C2" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo oprogramowania", type: "CWL", group: "4", room: "426, bud. C2" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Systemy i sieci komórkowe", type: "CWL", group: "2", room: "112, bud. B9" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Prywatność i ochrona danych osobowych", type: "CWP", group: "1", room: "010, bud. B9" },
-            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Prywatność i ochrona danych osobowych", type: "CWP", group: "2", room: "010, bud. B9" },
-            { day: "Środa", start: "08:00", end: "09:30", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWL", group: "1", room: "112, bud. B9" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWL", group: "2", room: "112, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWL", group: "3", room: "112, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWP", group: "1", room: "112, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWL", group: "4", room: "112, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Bezpieczeństwo bezprzewodowych sieci komputerowych", type: "CWP", group: "2", room: "112, bud. B9" },
-            { day: "Środa", start: "15:00", end: "16:30", subject: "Systemy i sieci komórkowe", type: "CWL", group: "3", room: "112, bud. B9" },
-            { day: "Środa", start: "15:00", end: "16:30", subject: "Systemy i sieci komórkowe", type: "CWP", group: "1", room: "112, bud. B9" },
-            { day: "Środa", start: "16:45", end: "18:15", subject: "Systemy i sieci komórkowe", type: "CWL", group: "4", room: "112, bud. B9" },
-            { day: "Środa", start: "16:45", end: "18:15", subject: "Systemy i sieci komórkowe", type: "CWP", group: "2", room: "112, bud. B9" },
-            { day: "Czwartek", start: "09:45", end: "11:15", subject: "Blok Język obcy - WIEiT 3/3", type: "LEKT", group: "1", room: "" },
-            { day: "Czwartek", start: "11:30", end: "13:00", subject: "Analiza złośliwego oprogramowania", type: "W", group: "1", room: "127, bud. D5" },
-            { day: "Czwartek", start: "13:15", end: "14:45", subject: "Wprowadzenie do białego wywiadu", type: "CWP", group: "2", room: "012, bud. B9" },
-            { day: "Czwartek", start: "13:15", end: "14:45", subject: "Wprowadzenie do białego wywiadu", type: "CWP", group: "1", room: "012, bud. B9" },
-            { day: "Czwartek", start: "15:30", end: "17:00", subject: "Wykrywanie incydentów", type: "W", group: "1", room: "online, bud. online" },
-            { day: "Piątek", start: "09:00", end: "10:30", subject: "Wykrywanie incydentów", type: "CWL", group: "4", room: "113, bud. B9" },
-            { day: "Piątek", start: "10:30", end: "12:45", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "1", room: "113, bud. B9" },
-            { day: "Piątek", start: "10:45", end: "12:15", subject: "Wykrywanie incydentów", type: "CWL", group: "2", room: "113, bud. B9" },
-            { day: "Piątek", start: "12:45", end: "14:15", subject: "Wykrywanie incydentów", type: "CWL", group: "3", room: "113, bud. B9" },
-            { day: "Piątek", start: "12:45", end: "15:00", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "2", room: "113, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "17:15", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "3", room: "113, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "17:15", subject: "Analiza złośliwego oprogramowania", type: "CWP", group: "1", room: "113, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "16:30", subject: "Wykrywanie incydentów", type: "CWL", group: "1", room: "105, bud. D6" },
-            { day: "Piątek", start: "17:15", end: "19:30", subject: "Analiza złośliwego oprogramowania", type: "CWL", group: "4", room: "113, bud. B9" },
-            { day: "Piątek", start: "17:15", end: "19:30", subject: "Analiza złośliwego oprogramowania", type: "CWP", group: "2", room: "113, bud. B9" },
+            // no events
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            "Analiza złośliwego oprogramowania": { ects: "?", status: "?", verify: "?", short: "Analiza z\u0142o\u015bliweg...", color: "#e3f2fd" },
-            "Bezpieczeństwo bezprzewodowych sieci komputerowych": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo be...", color: "#ffe0b2" },
-            "Bezpieczeństwo oprogramowania": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo op...", color: "#c8e6c9" },
-            "Blok Język obcy - WIEiT 3/3": { ects: "?", status: "?", verify: "?", short: "Blok J\u0119zyk obcy -...", color: "#fff9c4" },
-            "Prywatność i ochrona danych osobowych": { ects: "?", status: "?", verify: "?", short: "Prywatno\u015b\u0107 i ochr...", color: "#e1bee7" },
-            "Systemy i sieci komórkowe": { ects: "?", status: "?", verify: "?", short: "Systemy i sieci k...", color: "#b2dfdb" },
-            "Wprowadzenie do białego wywiadu": { ects: "?", status: "?", verify: "?", short: "Wprowadzenie do b...", color: "#f0f4c3" },
-            "Wykrywanie incydentów": { ects: "?", status: "?", verify: "?", short: "Wykrywanie incyde...", color: "#b3e5fc" },
+            // no meta
         };
 
         const typeMap = {

@@ -316,57 +316,12 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Blok Język obcy - WIEiT 1/3", type: "LEKT", group: "1", room: "" },
-            { day: "Poniedziałek", start: "09:45", end: "12:00", subject: "Fizyka", type: "CWL", group: "3", room: "222, bud. C2" },
-            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Fizyka", type: "CWA", group: "1", room: "127, bud. D5" },
-            { day: "Poniedziałek", start: "12:00", end: "14:15", subject: "Fizyka", type: "CWL", group: "5", room: "222, bud. C2" },
-            { day: "Poniedziałek", start: "13:15", end: "14:45", subject: "Systemy i sieci telekomunikacyjne", type: "CWL", group: "1", room: "103, bud. B9" },
-            { day: "Poniedziałek", start: "15:00", end: "16:30", subject: "Systemy i sieci telekomunikacyjne", type: "CWL", group: "5", room: "103, bud. B9" },
-            { day: "Poniedziałek", start: "15:00", end: "16:30", subject: "Lokalne sieci teleinformatyczne", type: "CWL", group: "3", room: "110, bud. B9" },
-            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Lokalne sieci teleinformatyczne", type: "CWL", group: "4", room: "110, bud. B9" },
-            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Lokalne sieci teleinformatyczne", type: "CWL", group: "5", room: "110, bud. B9" },
-            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Fizyka", type: "CWA", group: "2", room: "127, bud. D5" },
-            { day: "Wtorek", start: "08:00", end: "10:15", subject: "Fizyka", type: "CWL", group: "2", room: "222, bud. C2" },
-            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Fizyka", type: "CWA", group: "3", room: "127, bud. D5" },
-            { day: "Wtorek", start: "10:15", end: "12:30", subject: "Fizyka", type: "CWL", group: "1", room: "222, bud. C2" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Wybrane zagadnienia matematyki wyższej", type: "CWA", group: "3", room: "011, bud. B9" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Wybrane zagadnienia matematyki wyższej", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Wybrane zagadnienia matematyki wyższej", type: "CWA", group: "1", room: "010, bud. B9" },
-            { day: "Wtorek", start: "17:30", end: "19:00", subject: "Systemy i sieci telekomunikacyjne", type: "W", group: "1", room: "on-line, bud. A0" },
-            { day: "Środa", start: "08:00", end: "10:15", subject: "Fizyka", type: "CWL", group: "4", room: "222, bud. C2" },
-            { day: "Środa", start: "08:00", end: "10:15", subject: "Algorytmy i struktury danych", type: "CWL", group: "3", room: "113, bud. B9" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Probabilistyka i statystyka", type: "CWA", group: "1", room: "010, bud. B9" },
-            { day: "Środa", start: "10:15", end: "12:30", subject: "Fizyka", type: "CWL", group: "6", room: "222, bud. C2" },
-            { day: "Środa", start: "10:15", end: "12:30", subject: "Algorytmy i struktury danych", type: "CWL", group: "5", room: "113, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Probabilistyka i statystyka", type: "CWA", group: "2", room: "010, bud. B9" },
-            { day: "Środa", start: "12:30", end: "14:45", subject: "Algorytmy i struktury danych", type: "CWL", group: "1", room: "113, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Probabilistyka i statystyka", type: "CWA", group: "3", room: "010, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Wybrane zagadnienia matematyki wyższej", type: "CWA", group: "2", room: "2.2, bud. B7" },
-            { day: "Środa", start: "15:00", end: "16:30", subject: "Fizyka", type: "W", group: "1", room: "1, bud. D5" },
-            { day: "Środa", start: "16:45", end: "18:15", subject: "Probabilistyka i statystyka", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Czwartek", start: "08:00", end: "09:30", subject: "Blok Język obcy - WIEiT 1/3", type: "LEKT", group: "1", room: "" },
-            { day: "Czwartek", start: "09:45", end: "11:15", subject: "Fizyka", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Czwartek", start: "11:30", end: "13:45", subject: "Algorytmy i struktury danych", type: "CWL", group: "4", room: "102, bud. B9" },
-            { day: "Czwartek", start: "14:30", end: "16:45", subject: "Algorytmy i struktury danych", type: "CWL", group: "2", room: "102, bud. B9" },
-            { day: "Piątek", start: "08:00", end: "09:30", subject: "Lokalne sieci teleinformatyczne", type: "W", group: "1", room: "on-line, bud. A0" },
-            { day: "Piątek", start: "09:45", end: "11:15", subject: "Algorytmy i struktury danych", type: "W", group: "1", room: "on-line, bud. A0" },
-            { day: "Piątek", start: "12:15", end: "14:30", subject: "Lokalne sieci teleinformatyczne", type: "CWL", group: "1", room: "103, bud. B9" },
-            { day: "Piątek", start: "13:15", end: "14:45", subject: "Systemy i sieci telekomunikacyjne", type: "CWL", group: "2", room: "111, bud. B9" },
-            { day: "Piątek", start: "15:00", end: "16:30", subject: "Systemy i sieci telekomunikacyjne", type: "CWL", group: "4", room: "111, bud. B9" },
-            { day: "Piątek", start: "15:30", end: "17:45", subject: "Fizyka", type: "CWL", group: "7", room: "222, bud. C2" },
-            { day: "Piątek", start: "15:30", end: "17:45", subject: "Lokalne sieci teleinformatyczne", type: "CWL", group: "2", room: "103, bud. B9" },
-            { day: "Piątek", start: "16:45", end: "18:15", subject: "Systemy i sieci telekomunikacyjne", type: "CWL", group: "3", room: "111, bud. B9" },
+            // no events
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            "Algorytmy i struktury danych": { ects: "?", status: "?", verify: "?", short: "Algorytmy i struk...", color: "#e3f2fd" },
-            "Blok Język obcy - WIEiT 1/3": { ects: "?", status: "?", verify: "?", short: "Blok J\u0119zyk obcy -...", color: "#ffe0b2" },
-            "Fizyka": { ects: "?", status: "?", verify: "?", short: "Fizyka", color: "#c8e6c9" },
-            "Lokalne sieci teleinformatyczne": { ects: "?", status: "?", verify: "?", short: "Lokalne sieci tel...", color: "#fff9c4" },
-            "Probabilistyka i statystyka": { ects: "?", status: "?", verify: "?", short: "Probabilistyka i ...", color: "#e1bee7" },
-            "Systemy i sieci telekomunikacyjne": { ects: "?", status: "?", verify: "?", short: "Systemy i sieci t...", color: "#b2dfdb" },
-            "Wybrane zagadnienia matematyki wyższej": { ects: "?", status: "?", verify: "?", short: "Wybrane zagadnien...", color: "#f0f4c3" },
+            // no meta
         };
 
         const typeMap = {

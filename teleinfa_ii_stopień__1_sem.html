@@ -316,52 +316,12 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            { day: "Poniedziałek", start: "08:00", end: "09:30", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "1", room: "012, bud. B9" },
-            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "4", room: "104, bud. B9" },
-            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "2", room: "012, bud. B9" },
-            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "4", room: "104, bud. B9" },
-            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "3", room: "012, bud. B9" },
-            { day: "Poniedziałek", start: "15:15", end: "16:45", subject: "Zarządzanie i ekonomia projektów", type: "W", group: "1", room: "on-line, bud. A0" },
-            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "W", group: "1", room: "on-line, bud. A0" },
-            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Metody symulacyjne", type: "CWA", group: "2", room: "011, bud. B9" },
-            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Metody symulacyjne", type: "CWP", group: "3", room: "011, bud. B9" },
-            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "1", room: "104, bud. B9" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Ewolucja sieci", type: "CWP", group: "3", room: "010, bud. B9" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Metody symulacyjne", type: "CWP", group: "2", room: "111, bud. B9" },
-            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "1", room: "104, bud. B9" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Matematyka w analizie sieci i systemów", type: "CWA", group: "2", room: "010, bud. B9" },
-            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Ewolucja sieci", type: "CWP", group: "1", room: "111, bud. B9" },
-            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Metody symulacyjne", type: "CWP", group: "1", room: "111, bud. B9" },
-            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Ewolucja sieci", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Matematyka w analizie sieci i systemów", type: "W", group: "1", room: "201, bud. D6" },
-            { day: "Środa", start: "08:00", end: "09:30", subject: "Metody symulacyjne", type: "CWA", group: "3", room: "011, bud. B9" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "3", room: "104, bud. B9" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Ewolucja sieci", type: "CWP", group: "2", room: "103, bud. B9" },
-            { day: "Środa", start: "09:45", end: "11:15", subject: "Metody symulacyjne", type: "CWA", group: "1", room: "011, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Zarządzanie i ekonomia projektów", type: "CWL", group: "4", room: "207, bud. B9" },
-            { day: "Środa", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "3", room: "104, bud. B9" },
-            { day: "Środa", start: "13:15", end: "14:45", subject: "Jakość obsługi w sieciach", type: "CWP", group: "1", room: "102, bud. B9" },
-            { day: "Środa", start: "15:00", end: "16:30", subject: "Jakość obsługi w sieciach", type: "CWP", group: "2", room: "010, bud. B9" },
-            { day: "Środa", start: "16:45", end: "18:15", subject: "Jakość obsługi w sieciach", type: "CWP", group: "3", room: "010, bud. B9" },
-            { day: "Czwartek", start: "08:00", end: "09:30", subject: "Jakość obsługi w sieciach", type: "W", group: "1", room: "010, bud. B9" },
-            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "4", room: "3.16, bud. C7" },
-            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "3", room: "3.17, bud. C7" },
-            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "2", room: "3.17, bud. C7" },
-            { day: "Czwartek", start: "10:00", end: "13:45", subject: "Komunikacja i myślenie projektowe", type: "CWL", group: "1", room: "3.16, bud. C7" },
-            { day: "Czwartek", start: "17:00", end: "18:30", subject: "Matematyka w analizie sieci i systemów", type: "CWA", group: "1", room: "012, bud. B9" },
-            { day: "Piątek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "2", room: "104, bud. B9" },
-            { day: "Piątek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo sieci korporacyjnych", type: "CWL", group: "2", room: "104, bud. B9" },
+            // no events
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            "Bezpieczeństwo sieci korporacyjnych": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo si...", color: "#e3f2fd" },
-            "Ewolucja sieci": { ects: "?", status: "?", verify: "?", short: "Ewolucja sieci", color: "#ffe0b2" },
-            "Jakość obsługi w sieciach": { ects: "?", status: "?", verify: "?", short: "Jako\u015b\u0107 obs\u0142ugi w ...", color: "#c8e6c9" },
-            "Komunikacja i myślenie projektowe": { ects: "?", status: "?", verify: "?", short: "Komunikacja i my\u015b...", color: "#fff9c4" },
-            "Matematyka w analizie sieci i systemów": { ects: "?", status: "?", verify: "?", short: "Matematyka w anal...", color: "#e1bee7" },
-            "Metody symulacyjne": { ects: "?", status: "?", verify: "?", short: "Metody symulacyjne", color: "#b2dfdb" },
-            "Zarządzanie i ekonomia projektów": { ects: "?", status: "?", verify: "?", short: "Zarz\u0105dzanie i eko...", color: "#f0f4c3" },
+            // no meta
         };
 
         const typeMap = {
