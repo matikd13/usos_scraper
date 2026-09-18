@@ -316,12 +316,44 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            // no events
+            { day: "Poniedziałek", start: "08:45", end: "10:15", subject: "Komunikacja interpersonalna i praca zespołowa", type: "ZW", group: "1", room: "4.12, bud. C7" },
+            { day: "Poniedziałek", start: "09:45", end: "12:45", subject: "Psychologia osobowości i psychopatologia", type: "W", group: "1", room: "1.13, bud. C7" },
+            { day: "Poniedziałek", start: "10:30", end: "11:15", subject: "Komunikacja interpersonalna i praca zespołowa", type: "W", group: "1", room: "4.12, bud. C7" },
+            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Komunikacja interpersonalna i praca zespołowa", type: "ZW", group: "2", room: "4.12, bud. C7" },
+            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo państwa", type: "W", group: "1", room: "Wirtualna, bud. C3" },
+            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Pozyskiwanie, zabezpieczanie i analiza danych cyfrowych", type: "W", group: "1", room: "Wirtualna, bud. C3" },
+            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Sieci transmisji danych", type: "W", group: "1", room: "309, bud. C3" },
+            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Sieci transmisji danych", type: "CWL", group: "4", room: "301, bud. C3" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Sieci transmisji danych", type: "CWL", group: "3", room: "301, bud. C3" },
+            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Pozyskiwanie, zabezpieczanie i analiza danych cyfrowych", type: "CWP", group: "1", room: "Wirtualna, bud. C3" },
+            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Pozyskiwanie, zabezpieczanie i analiza danych cyfrowych", type: "CWP", group: "2", room: "Wirtualna, bud. C3" },
+            { day: "Środa", start: "08:00", end: "09:30", subject: "Polityka karna państwa", type: "W", group: "1", room: "501, bud. C3" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Polityka karna państwa", type: "CWA", group: "2", room: "309, bud. C3" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Polityka karna państwa", type: "CWA", group: "1", room: "309, bud. C3" },
+            { day: "Środa", start: "15:00", end: "16:30", subject: "Instytucja biegłego sądowego", type: "W", group: "1", room: "1, bud. D5" },
+            { day: "Środa", start: "16:45", end: "18:15", subject: "Instytucja biegłego sądowego", type: "CWA", group: "1", room: "130, bud. D5" },
+            { day: "Środa", start: "18:30", end: "20:00", subject: "Instytucja biegłego sądowego", type: "CWA", group: "2", room: "130, bud. D5" },
+            { day: "Czwartek", start: "09:45", end: "11:15", subject: "Sieci transmisji danych", type: "CWL", group: "2", room: "301, bud. C3" },
+            { day: "Czwartek", start: "11:30", end: "13:00", subject: "Sieci transmisji danych", type: "CWL", group: "1", room: "301, bud. C3" },
+            { day: "Czwartek", start: "15:00", end: "16:30", subject: "Podstawy psychologii śledczej i sądowej", type: "W", group: "1", room: "1.14, bud. C7" },
+            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Podstawy psychologii śledczej i sądowej", type: "CWP", group: "2", room: "3.17, bud. C7" },
+            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo państwa", type: "CWA", group: "2", room: "402.2, bud. C6" },
+            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Podstawy psychologii śledczej i sądowej", type: "CWP", group: "1", room: "3.17, bud. C7" },
+            { day: "Czwartek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo państwa", type: "CWA", group: "1", room: "402.2, bud. C6" },
+            { day: "Czwartek", start: "18:30", end: "20:00", subject: "Podstawy psychologii śledczej i sądowej", type: "CWP", group: "2", room: "3.17, bud. C7" },
+            { day: "Czwartek", start: "18:30", end: "20:00", subject: "Podstawy psychologii śledczej i sądowej", type: "CWP", group: "1", room: "3.17, bud. C7" },
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            // no meta
+            "Bezpieczeństwo państwa": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo pa...", color: "#e3f2fd" },
+            "Instytucja biegłego sądowego": { ects: "?", status: "?", verify: "?", short: "Instytucja bieg\u0142e...", color: "#ffe0b2" },
+            "Komunikacja interpersonalna i praca zespołowa": { ects: "?", status: "?", verify: "?", short: "Komunikacja inter...", color: "#c8e6c9" },
+            "Podstawy psychologii śledczej i sądowej": { ects: "?", status: "?", verify: "?", short: "Podstawy psycholo...", color: "#fff9c4" },
+            "Polityka karna państwa": { ects: "?", status: "?", verify: "?", short: "Polityka karna pa...", color: "#e1bee7" },
+            "Pozyskiwanie, zabezpieczanie i analiza danych cyfrowych": { ects: "?", status: "?", verify: "?", short: "Pozyskiwanie, zab...", color: "#b2dfdb" },
+            "Psychologia osobowości i psychopatologia": { ects: "?", status: "?", verify: "?", short: "Psychologia osobo...", color: "#f0f4c3" },
+            "Sieci transmisji danych": { ects: "?", status: "?", verify: "?", short: "Sieci transmisji ...", color: "#b3e5fc" },
         };
 
         const typeMap = {

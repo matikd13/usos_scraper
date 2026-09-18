@@ -316,12 +316,20 @@
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            // no events
+            { day: "Wtorek", start: "11:30", end: "14:30", subject: "Mikroskopia w zastosowaniach kryminalistycznych", type: "CWL", group: "2", room: "228a, bud. A3" },
+            { day: "Wtorek", start: "11:30", end: "14:30", subject: "Mikroskopia w zastosowaniach kryminalistycznych", type: "CWL", group: "1", room: "228a, bud. A3" },
+            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Mikroskopia w zastosowaniach kryminalistycznych", type: "W", group: "1", room: "322, bud. A3" },
+            { day: "Środa", start: "13:15", end: "14:45", subject: "Chemia analityczna w kryminalistyce", type: "W", group: "1", room: "3.22, bud. B8" },
+            { day: "Piątek", start: "09:00", end: "10:30", subject: "Chemia analityczna w kryminalistyce", type: "W", group: "1", room: "416, bud. A3" },
+            { day: "Piątek", start: "10:45", end: "14:30", subject: "Chemia analityczna w kryminalistyce", type: "CWL", group: "3", room: "416, bud. A3" },
+            { day: "Piątek", start: "10:45", end: "14:30", subject: "Chemia analityczna w kryminalistyce", type: "CWL", group: "2", room: "416, bud. A3" },
+            { day: "Piątek", start: "10:45", end: "14:30", subject: "Chemia analityczna w kryminalistyce", type: "CWL", group: "1", room: "416, bud. A3" },
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            // no meta
+            "Chemia analityczna w kryminalistyce": { ects: "?", status: "?", verify: "?", short: "Chemia analityczn...", color: "#e3f2fd" },
+            "Mikroskopia w zastosowaniach kryminalistycznych": { ects: "?", status: "?", verify: "?", short: "Mikroskopia w zas...", color: "#ffe0b2" },
         };
 
         const typeMap = {
