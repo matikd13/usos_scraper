@@ -1,6 +1,6 @@
 # AGH USOS plan URL builder. Per program: "prefix" (grupa_kod prefix) + label -> (grupa_part, term)
 BASE = "https://web.usos.agh.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazPlanGrupyPrzedmiotow"
-YEAR = "25/26"
+YEAR = "26/27"
 
 
 def plan_url(prefix: str, grupa_part: str, term: str = "Z") -> str:
@@ -40,6 +40,8 @@ PLANS = {
         "prefix": "230-NTK",
         "I Stopień, 4 Sem": ("-1S_sem4", "L"),
         "I Stopień, 4 Sem, Ścieżka Chemiczna": ("-1S_sem4_AK", "L"),
+        "I Stopień, 5 Sem": ("-1S_sem5", "L"),
+        "I Stopień, 5 Sem, Ścieżka Chemiczna": ("-1S_sem5_AK", "L"),
     }
 }
 
