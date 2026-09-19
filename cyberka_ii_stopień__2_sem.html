@@ -255,7 +255,375 @@
             align-items: center;
             justify-content: center;
             border-bottom-left-radius: 6px;
-            z-index: 2;
+        }
+        /* --- KAFELKI W WIDOKU WYBRANYCH I DODATKI --- */
+        .event.event-my-plan-full {
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .event.event-my-plan-full:hover {
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+            transform: scale(1.01);
+        }
+
+        .event-room {
+            font-size: 0.7rem;
+            color: #37474f;
+            margin-top: 3px;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.78);
+            padding: 1px 7px;
+            border-radius: 4px;
+            max-width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .delete-event-btn {
+            position: absolute;
+            top: 2px;
+            left: 48px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 14px;
+            line-height: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 25;
+            padding: 0;
+            transition: transform 0.15s;
+        }
+
+        .delete-event-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.2);
+        }
+
+        
+        /* --- TOOLBAR / PRZYCISKI AKCJI --- */
+        .toolbar-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e4e8;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid #c2c9d1;
+            background: linear-gradient(180deg, #ffffff 0%, #f3f5f8 100%);
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03), inset 0 1px 0 #ffffff;
+            user-select: none;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06), inset 0 1px 0 #ffffff;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset;
+            background: #e2e8f0;
+        }
+
+        .btn .icon {
+            font-size: 1.1em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+            border-color: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+        }
+
+        .btn-primary.active {
+            background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+            border-color: #059669;
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+            border-color: #059669;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+        }
+
+        .btn-export {
+            background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
+            border-color: #7e22ce;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(147, 51, 234, 0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-export:hover {
+            background: linear-gradient(180deg, #9333ea 0%, #7e22ce 100%);
+            color: #ffffff;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: transparent;
+            color: #64748b;
+            box-shadow: none;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(0,0,0,0.05);
+            border-color: transparent;
+        }
+
+        /* --- PANEL WYBIERANIA GRUP I STATUSU --- */
+        .selection-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 9px 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .panel-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .panel-hint {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.81rem;
+            color: #475569;
+        }
+
+        .hint-icon {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .status-badge.all-ok {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-badge.pending {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .status-badge.mode-active {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .missing-chips-list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            padding-top: 6px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .missing-label {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-right: 3px;
+        }
+
+        .subject-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 2px 7px;
+            font-size: 0.75rem;
+            color: #334155;
+        }
+
+        .subject-chip .chip-name {
+            font-weight: 500;
+        }
+
+        .subject-chip .chip-type-badge {
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 0.67rem;
+            font-weight: 600;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* --- MODAL FORMULARZA DODAWANIA PRZEDMIOTU --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            max-width: 480px;
+            width: 92%;
+            padding: 24px;
+            box-sizing: border-box;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .modal-close-btn:hover {
+            color: #222;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 14px;
+            flex: 1;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="time"],
+        .form-group select {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1565c0;
+            box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
         }
 
     </style>
@@ -265,7 +633,27 @@
 
     <h1>Plan Zajęć Semestralnych</h1>
 
-    <div class="filters-container">
+    
+    <div class="toolbar-container">
+        <button id="btnToggleFilters" class="btn" onclick="toggleFilters()">
+            <span class="icon">⚙️</span> Filtry
+        </button>
+        <button id="btnToggleSelected" class="btn btn-primary" onclick="toggleShowOnlySelected()">
+            <span class="icon">🎯</span> Pokaż tylko mój plan
+        </button>
+        
+        <button id="btnSelectLectures" class="btn" onclick="selectAllWykład(); renderSchedule();" title="Zaznacz wszystkie wykłady jako Twoje grupy">
+            <span class="icon">📚</span> Zaznacz wykłady
+        </button>
+        <button id="btnClearPlan" class="btn btn-ghost" onclick="clearMyPlan()" title="Wyczyść wszystkie wybrane grupy">
+            <span class="icon">↺</span> Wyczyść wybór
+        </button>
+        <button id="btnExport" class="btn btn-export" onclick="exportPlan()">
+            <span class="icon">💾</span> Eksportuj
+        </button>
+    </div>
+
+    <div class="filters-container" id="filtersContainer" style="display: none;">
         <div class="filter-group">
             <div class="filter-header">
                 Przedmioty
@@ -292,10 +680,16 @@
 
     </div>
 
-    <p class="schedule-hint" style="font-size: 0.85rem; color: #666; margin: 0 0 12px 0;">Kliknij kafelek, aby wybrać grupę z przedmiotu (reszta planu się przyciemni). Kliknij ponownie, aby odznaczyć.</p>
-
-    <div id="unselectedSummary" class="unselected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #fff8e1; border: 1px solid #ffca28; border-radius: 6px; color: #5d4e37;"></div>
-    <div id="allSelectedSummary" class="all-selected-summary" style="display: none; font-size: 0.9rem; margin-bottom: 12px; padding: 10px 14px; background: #e8f5e9; border: 1px solid #81c784; border-radius: 6px; color: #2e7d32;"></div>
+    <div class="selection-panel" id="selectionPanel">
+        <div class="panel-top-row">
+            <div class="panel-hint" id="panelHint">
+                <span class="hint-icon">💡</span>
+                <span id="hintText">Kliknij kafelek zajęć, aby przypisać grupę (pozostałe grupy się przyciemnią). Kliknij ponownie, aby odznaczyć.</span>
+            </div>
+            <div id="panelStatusBadge" class="status-badge"></div>
+        </div>
+        <div id="missingChipsContainer" class="missing-chips-list" style="display: none;"></div>
+    </div>
 
     <div class="schedule-wrapper">
         <div class="header-cell">Godz</div>
@@ -313,15 +707,71 @@
         <div class="day-col" id="col-Piątek"></div>
     </div>
 
+    
+
     <script>
         // --- 1. DANE Z PLIKU FIXED.CSV ---
         const rawData = [
-            // no events
+            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Bezpieczeństwo treści multimedialnych", type: "CWP", group: "1", room: "online, bud. online" },
+            { day: "Poniedziałek", start: "09:45", end: "11:15", subject: "Szeregi czasowe", type: "KONW", group: "1", room: "online, bud. online" },
+            { day: "Poniedziałek", start: "11:30", end: "13:00", subject: "Bezpieczeństwo treści multimedialnych", type: "CWP", group: "2", room: "online, bud. online" },
+            { day: "Poniedziałek", start: "13:15", end: "14:45", subject: "Bezpieczeństwo treści multimedialnych", type: "CWP", group: "3", room: "online, bud. online" },
+            { day: "Poniedziałek", start: "13:15", end: "14:45", subject: "Kryptografia postkwantowa", type: "CWA", group: "1", room: "010, bud. B9" },
+            { day: "Poniedziałek", start: "15:00", end: "16:30", subject: "Kryptografia postkwantowa", type: "CWA", group: "2", room: "010, bud. B9" },
+            { day: "Poniedziałek", start: "16:45", end: "18:15", subject: "Kryptografia postkwantowa", type: "CWA", group: "3", room: "010, bud. B9" },
+            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Kryptografia postkwantowa", type: "CWP", group: "3", room: "012, bud. B9" },
+            { day: "Poniedziałek", start: "18:30", end: "20:00", subject: "Kryptografia postkwantowa", type: "CWP", group: "2", room: "010, bud. B9" },
+            { day: "Wtorek", start: "08:00", end: "09:30", subject: "Deep Learning Algorithms for Cybersecurity Applications", type: "W", group: "1", room: "201, bud. D6" },
+            { day: "Wtorek", start: "09:45", end: "11:15", subject: "Detekcja i analiza zagrożeń komputerowych", type: "W", group: "1", room: "127, bud. D5" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Detekcja i analiza zagrożeń komputerowych", type: "CWL", group: "3", room: "105, bud. D6" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Detekcja i analiza zagrożeń komputerowych", type: "CWL", group: "2", room: "011, bud. B9" },
+            { day: "Wtorek", start: "11:30", end: "13:00", subject: "Deep Learning Algorithms for Cybersecurity Applications", type: "CWL", group: "1", room: "112, bud. B9" },
+            { day: "Wtorek", start: "13:15", end: "14:45", subject: "Detekcja i analiza zagrożeń komputerowych", type: "CWL", group: "1", room: "011, bud. B9" },
+            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "CWP", group: "1", room: "012, bud. B9" },
+            { day: "Wtorek", start: "15:00", end: "16:30", subject: "Bezpieczeństwo w systemach 5G i 6G", type: "CWL", group: "1", room: "112, bud. B9" },
+            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "CWP", group: "2", room: "102, bud. B9" },
+            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo treści multimedialnych", type: "ZS", group: "1", room: "201, bud. D6" },
+            { day: "Wtorek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo w systemach 5G i 6G", type: "CWP", group: "1", room: "012, bud. B9" },
+            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "CWP", group: "3", room: "012, bud. B9" },
+            { day: "Wtorek", start: "18:30", end: "20:00", subject: "Kryptografia postkwantowa", type: "CWP", group: "1", room: "010, bud. B9" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "KONW", group: "3", room: "012, bud. B9" },
+            { day: "Środa", start: "09:45", end: "11:15", subject: "Metodyki projektów z zakresu cyberbezpieczeństwa", type: "CWP", group: "1", room: "online, bud. online" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Threat Intelligence", type: "CWP", group: "2", room: "online, bud. online" },
+            { day: "Środa", start: "11:30", end: "13:00", subject: "Threat Intelligence", type: "CWP", group: "1", room: "online, bud. online" },
+            { day: "Środa", start: "13:15", end: "14:45", subject: "Threat Intelligence", type: "CWP", group: "3", room: "online, bud. online" },
+            { day: "Środa", start: "15:00", end: "16:30", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "KONW", group: "2", room: "010, bud. B9" },
+            { day: "Środa", start: "16:45", end: "18:15", subject: "Bezpieczeństwo treści multimedialnych", type: "ZS", group: "1", room: "012, bud. B9" },
+            { day: "Środa", start: "18:30", end: "20:00", subject: "Psychologiczne aspekty cyberbezpieczeństwa", type: "KONW", group: "1", room: "010, bud. B9" },
+            { day: "Czwartek", start: "11:30", end: "13:00", subject: "Threat Intelligence", type: "W", group: "1", room: "online, bud. online" },
+            { day: "Czwartek", start: "13:15", end: "14:45", subject: "Metodyki projektów z zakresu cyberbezpieczeństwa", type: "W", group: "1", room: "online, bud. online" },
+            { day: "Czwartek", start: "15:00", end: "16:30", subject: "Kryptografia postkwantowa", type: "W", group: "1", room: "online, bud. online" },
+            { day: "Czwartek", start: "18:30", end: "20:00", subject: "Bezpieczeństwo w systemach 5G i 6G", type: "W", group: "1", room: "online, bud. online" },
+            { day: "Piątek", start: "08:00", end: "09:30", subject: "Metodyka prowadzenia prac B+R", type: "W", group: "1", room: "207, bud. B9" },
+            { day: "Piątek", start: "09:45", end: "11:15", subject: "Metodyka prowadzenia prac B+R", type: "CWP", group: "1", room: "207, bud. B9" },
+            { day: "Piątek", start: "11:30", end: "13:00", subject: "Metodyka prowadzenia prac B+R", type: "CWP", group: "2", room: "207, bud. B9" },
+            { day: "Piątek", start: "13:15", end: "14:45", subject: "Metodyka prowadzenia prac B+R", type: "CWP", group: "3", room: "207, bud. B9" },
+            { day: "Piątek", start: "15:00", end: "16:30", subject: "Purple Teaming", type: "W", group: "1", room: "1, bud. D5" },
+            { day: "Piątek", start: "16:45", end: "18:15", subject: "Bezpieczeństwo treści multimedialnych", type: "ZS", group: "3", room: "010, bud. B9" },
+            { day: "Piątek", start: "16:45", end: "18:15", subject: "Purple Teaming", type: "CWL", group: "3", room: "105, bud. D6" },
+            { day: "Piątek", start: "16:45", end: "18:15", subject: "Purple Teaming", type: "CWL", group: "2", room: "011, bud. B9" },
+            { day: "Piątek", start: "18:30", end: "20:00", subject: "Bezpieczeństwo treści multimedialnych", type: "ZS", group: "2", room: "010, bud. B9" },
+            { day: "Piątek", start: "18:30", end: "20:00", subject: "Purple Teaming", type: "CWL", group: "1", room: "011, bud. B9" },
+            { day: "Piątek", start: "18:45", end: "20:15", subject: "Szeregi czasowe", type: "CWP", group: "1", room: "online, bud. online" },
         ];
 
         // --- 2. METADANE I KOLORY (DOBRANE RĘCZNIE) ---
         const metaData = {
-            // no meta
+            "Bezpieczeństwo treści multimedialnych": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo tr...", color: "#e3f2fd" },
+            "Bezpieczeństwo w systemach 5G i 6G": { ects: "?", status: "?", verify: "?", short: "Bezpiecze\u0144stwo w ...", color: "#ffe0b2" },
+            "Deep Learning Algorithms for Cybersecurity Applications": { ects: "?", status: "?", verify: "?", short: "Deep Learning Alg...", color: "#c8e6c9" },
+            "Detekcja i analiza zagrożeń komputerowych": { ects: "?", status: "?", verify: "?", short: "Detekcja i analiz...", color: "#fff9c4" },
+            "Kryptografia postkwantowa": { ects: "?", status: "?", verify: "?", short: "Kryptografia post...", color: "#e1bee7" },
+            "Metodyka prowadzenia prac B+R": { ects: "?", status: "?", verify: "?", short: "Metodyka prowadze...", color: "#b2dfdb" },
+            "Metodyki projektów z zakresu cyberbezpieczeństwa": { ects: "?", status: "?", verify: "?", short: "Metodyki projekt\u00f3...", color: "#f0f4c3" },
+            "Psychologiczne aspekty cyberbezpieczeństwa": { ects: "?", status: "?", verify: "?", short: "Psychologiczne as...", color: "#b3e5fc" },
+            "Purple Teaming": { ects: "?", status: "?", verify: "?", short: "Purple Teaming", color: "#d1c4e9" },
+            "Szeregi czasowe": { ects: "?", status: "?", verify: "?", short: "Szeregi czasowe", color: "#ffcdd2" },
+            "Threat Intelligence": { ects: "?", status: "?", verify: "?", short: "Threat Intelligence", color: "#f8bbd0" },
         };
 
         const typeMap = {
@@ -329,7 +779,8 @@
             "W": { badge: "W", color: "var(--badge-w)", name: "Wykład" },
             "CWP": { badge: "P", color: "var(--badge-p)", name: "Projekt" },
             "CWA": { badge: "C", color: "var(--badge-c)", name: "Ćwiczenia" },
-            "KONW": { badge: "K", color: "var(--badge-c)", name: "Konwersatorium" }
+            "KONW": { badge: "K", color: "var(--badge-c)", name: "Konwersatorium" },
+            "LEK": { badge: "J", color: "#8e24aa", name: "Lektorat" }
         };
 
         function timeToMinutes(t) {
@@ -356,9 +807,73 @@
         }
 
         // --- 4. LOGIKA FILTROWANIA I RENDEROWANIA ---
+        function toggleFilters() {
+            const container = document.getElementById('filtersContainer');
+            if (container.style.display === 'none' || !container.style.display) {
+                container.style.display = 'flex';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        function exportPlan() {
+            const allData = getAllData();
+            let exportData = allData.filter(item => myPlan[planKey(item)] === item.group);
+            
+            if (exportData.length === 0) {
+                alert("Brak przedmiotów w Twoim planie. Zaznacz najpierw zajęcia na planie.");
+                return;
+            }
+            
+            // Sortowanie po dniu i godzinie
+            const daysOrder = { "Poniedziałek": 1, "Wtorek": 2, "Środa": 3, "Czwartek": 4, "Piątek": 5 };
+            exportData.sort((a, b) => {
+                if (daysOrder[a.day] !== daysOrder[b.day]) return daysOrder[a.day] - daysOrder[b.day];
+                return timeToMinutes(a.start) - timeToMinutes(b.start);
+            });
+
+            let text = "MÓJ PLAN ZAJĘĆ\n================================================================================\n\n";
+            let currentDay = "";
+            
+            // Obliczamy maksymalne długości dla wyrównania
+            let maxSubj = 0;
+            let maxType = 0;
+            let maxGroup = 0;
+            exportData.forEach(item => {
+                const isCustom = item.isCustom ? "[Własny] " : "";
+                const subjLen = (isCustom + item.subject).length;
+                if(subjLen > maxSubj) maxSubj = subjLen;
+                if(item.type.length > maxType) maxType = item.type.length;
+                if(item.group.length > maxGroup) maxGroup = item.group.length;
+            });
+
+            exportData.forEach(item => {
+                if (item.day !== currentDay) {
+                    currentDay = item.day;
+                    text += `\n--- ${currentDay.toUpperCase()} ---\n`;
+                }
+                const isCustom = item.isCustom ? "[Własny] " : "";
+                const timeStr = `${item.start} - ${item.end}`;
+                const subjStr = (isCustom + item.subject).padEnd(maxSubj + 2, " ");
+                const typeStr = item.type.padEnd(maxType + 2, " ");
+                const groupStr = ("Gr. " + item.group).padEnd(maxGroup + 2, " ");
+                const roomStr = item.room || 'Brak sali';
+                
+                text += `${timeStr}  |  ${subjStr}|  ${typeStr}|  ${groupStr}|  ${roomStr}\n`;
+            });
+            
+            const dataUri = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
+            const a = document.createElement("a");
+            a.href = dataUri;
+            a.download = "moj_plan_zajec.txt";
+            a.click();
+        }
+
 
         // Moja grupa: klik w kafelek = wybór tej grupy dla (przedmiot, typ). Np. lab gr.1, projekt gr.2 osobno.
         const myPlan = {}; // "subject|type" -> group
+        let customEvents = []; // Własne przedmioty dodane przez użytkownika
+        let showOnlySelected = false; // Tryb: tylko wybrane przedmioty (mój plan)
 
         const STORAGE_KEY = 'usos_timetable_' + (location.pathname || '/').replace(/^\/$/, 'index').replace(/^\//, '').replace(/\//g, '_') || 'index';
 
@@ -373,8 +888,18 @@
             const activeSubjects = Array.from(document.querySelectorAll('#subjectFilters input:checked')).map(cb => cb.value);
             const activeTypes = Array.from(document.querySelectorAll('#typeFilters input:checked')).map(cb => cb.value);
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({ activeSubjects, activeTypes, myPlan: { ...myPlan } }));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    activeSubjects,
+                    activeTypes,
+                    myPlan: { ...myPlan },
+                    showOnlySelected,
+                    customEvents
+                }));
             } catch (e) { /* quota or private mode */ }
+        }
+
+        function getAllData() {
+            return [...rawData, ...customEvents];
         }
 
         function planKey(ev) {
@@ -391,49 +916,100 @@
             renderSchedule();
         }
 
+        function toggleShowOnlySelected() {
+            showOnlySelected = !showOnlySelected;
+            updateToolbarButtons();
+            renderSchedule();
+        }
+
+        function updateToolbarButtons() {
+            const btn = document.getElementById('btnToggleSelected');
+            if (!btn) return;
+            if (showOnlySelected) {
+                btn.classList.add('active');
+                btn.innerHTML = '✓ Pokaż wszystkie grupy';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '🎯 Pokaż tylko mój plan';
+            }
+        }
+
+        function clearMyPlan() {
+            if (confirm("Czy na pewno chcesz wyczyścić wszystkie wybrane grupy z planu?")) {
+                for (const k in myPlan) delete myPlan[k];
+                renderSchedule();
+            }
+        }
+
         // Przy starcie: automatycznie zaznacz wszystkie Wykłady (W)
         function selectAllWykład() {
-            rawData.forEach(d => {
+            getAllData().forEach(d => {
                 if (d.type === 'W') {
                     myPlan[d.subject + '|W'] = d.group;
                 }
             });
         }
 
-        // Które przedmioty/typy nie mają jeszcze wybranej grupy (z uwzgl. aktywnych filtrów)
-        function updateUnselectedSummary(activeSubjects, activeTypes) {
-            const subjectTypes = {}; // subject -> Set of types (from filtered data)
-            rawData.forEach(d => {
+        // Aktualizacja panelu wyboru grup i statusu (wskazówki, brakujące grupy jako chipy, status planu)
+        function updateSelectionPanel(activeSubjects, activeTypes, hasMyPlan) {
+            const hintEl = document.getElementById('hintText');
+            const badgeEl = document.getElementById('panelStatusBadge');
+            const chipsContainer = document.getElementById('missingChipsContainer');
+            if (!hintEl || !badgeEl || !chipsContainer) return;
+
+            if (showOnlySelected) {
+                if (!hasMyPlan) {
+                    hintEl.innerHTML = 'Twój plan jest obecnie pusty! Wyłącz ten tryb i wybierz grupy na planie lub dodaj własny przedmiot.';
+                    badgeEl.className = 'status-badge pending';
+                    badgeEl.innerHTML = '⚠️ Pusty plan';
+                } else {
+                    hintEl.innerHTML = 'Wyświetlasz wyłącznie wybrane zajęcia wyjustowane na pełną szerokość kolumn. Kliknij kafelek, aby go odznaczyć.';
+                    badgeEl.className = 'status-badge mode-active';
+                    badgeEl.innerHTML = '🎯 Tylko mój plan';
+                }
+                chipsContainer.style.display = 'none';
+                return;
+            }
+
+            hintEl.innerHTML = 'Kliknij kafelek zajęć, aby wybrać grupę (pozostałe grupy się przyciemnią). Kliknij ponownie, aby odznaczyć.';
+
+            const subjectTypes = {};
+            getAllData().forEach(d => {
                 if (!activeSubjects.includes(d.subject) || !activeTypes.includes(d.type)) return;
                 if (!subjectTypes[d.subject]) subjectTypes[d.subject] = new Set();
                 subjectTypes[d.subject].add(d.type);
             });
-            const missing = []; // { subject, types: [] }
+
+            const missing = [];
             Object.keys(subjectTypes).sort().forEach(subj => {
                 const types = subjectTypes[subj];
                 const notChosen = [...types].filter(t => !myPlan[subj + "|" + t]);
                 if (notChosen.length > 0) {
-                    const typeNames = notChosen.map(t => typeMap[t] ? typeMap[t].name : t).join(", ");
-                    missing.push({ subject: subj, types: typeNames });
+                    missing.push({
+                        subject: subj,
+                        types: notChosen.map(t => typeMap[t] ? typeMap[t].name : t)
+                    });
                 }
             });
-            const unselEl = document.getElementById('unselectedSummary');
-            const allEl = document.getElementById('allSelectedSummary');
-            if (missing.length > 0) {
-                unselEl.style.display = 'block';
-                allEl.style.display = 'none';
-                unselEl.innerHTML = '<strong>Nie wybrano jeszcze grupy dla:</strong> ' +
-                    missing.map(m => m.subject + ' <span style="color:#795548">(' + m.types + ')</span>').join(', ');
+
+            if (missing.length === 0) {
+                badgeEl.className = 'status-badge all-ok';
+                badgeEl.innerHTML = '✓ Wszystkie grupy wybrane';
+                chipsContainer.style.display = 'none';
             } else {
-                unselEl.style.display = 'none';
-                allEl.style.display = 'block';
-                allEl.textContent = '✓ Wszystkie przedmioty mają wybraną grupę.';
+                badgeEl.className = 'status-badge pending';
+                badgeEl.innerHTML = `⚠️ Do wyboru: ${missing.length}`;
+                chipsContainer.style.display = 'flex';
+
+                let chipsHtml = '<span class="missing-label">Wybierz grupę:</span>';
+                missing.forEach(m => {
+                    const shortName = metaData[m.subject] && metaData[m.subject].short ? metaData[m.subject].short : m.subject;
+                    const badges = m.types.map(t => `<span class="chip-type-badge">${t}</span>`).join(' ');
+                    chipsHtml += `<span class="subject-chip" title="${m.subject}"><span class="chip-name">${shortName}</span> ${badges}</span>`;
+                });
+                chipsContainer.innerHTML = chipsHtml;
             }
         }
-
-        // Pobierz unikalne wartości do filtrów
-        const uniqueSubjects = [...new Set(rawData.map(d => d.subject))].sort();
-        const uniqueTypes = [...new Set(rawData.map(d => d.type))].sort();
 
         // Inicjalizacja filtrów (przywraca zaznaczenia z localStorage)
         function initFilters() {
@@ -441,42 +1017,170 @@
             const savedSubjects = saved && saved.activeSubjects ? new Set(saved.activeSubjects) : null;
             const savedTypes = saved && saved.activeTypes ? new Set(saved.activeTypes) : null;
 
+            if (saved) {
+                if (Array.isArray(saved.customEvents)) {
+                    customEvents = saved.customEvents;
+                    customEvents.forEach(ce => {
+                        if (!metaData[ce.subject]) {
+                            metaData[ce.subject] = {
+                                ects: "?",
+                                status: "Własny",
+                                verify: "?",
+                                short: ce.subject.length > 20 ? ce.subject.slice(0, 17) + "..." : ce.subject,
+                                color: ce.color || "#b2dfdb"
+                            };
+                        }
+                    });
+                }
+                if (typeof saved.showOnlySelected === 'boolean') {
+                    showOnlySelected = saved.showOnlySelected;
+                }
+                if (saved.myPlan && typeof saved.myPlan === 'object') {
+                    Object.keys(saved.myPlan).forEach(k => {
+                        myPlan[k] = saved.myPlan[k];
+                    });
+                }
+            }
+
+            const allData = getAllData();
+            const uniqueSubjects = [...new Set(allData.map(d => d.subject))].sort();
+            const uniqueTypes = [...new Set(allData.map(d => d.type))].sort();
+
             const subContainer = document.getElementById('subjectFilters');
-            uniqueSubjects.forEach(sub => {
-                const checked = savedSubjects == null ? true : savedSubjects.has(sub);
-                const label = document.createElement('label');
-                label.className = 'checkbox-label';
-                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(sub).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(sub).replace(/&/g, '&amp;').replace(/</g, '&lt;')}`;
-                subContainer.appendChild(label);
-            });
-
-            const typeContainer = document.getElementById('typeFilters');
-            uniqueTypes.forEach(typ => {
-                const checked = savedTypes == null ? true : savedTypes.has(typ);
-                const typeName = typeMap[typ] ? typeMap[typ].name : typ;
-                const label = document.createElement('label');
-                label.className = 'checkbox-label';
-                label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(typ).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(typeName).replace(/&/g, '&amp;').replace(/</g, '&lt;')} (${String(typ).replace(/&/g, '&amp;')})`;
-                typeContainer.appendChild(label);
-            });
-
-            if (saved && saved.myPlan && typeof saved.myPlan === 'object') {
-                Object.keys(saved.myPlan).forEach(k => {
-                    if (rawData.some(d => planKey(d) === k)) myPlan[k] = saved.myPlan[k];
+            if (subContainer) {
+                subContainer.innerHTML = '';
+                uniqueSubjects.forEach(sub => {
+                    const checked = savedSubjects == null ? true : savedSubjects.has(sub);
+                    const label = document.createElement('label');
+                    label.className = 'checkbox-label';
+                    label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(sub).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(sub).replace(/&/g, '&amp;').replace(/</g, '&lt;')}`;
+                    subContainer.appendChild(label);
                 });
             }
+
+            const typeContainer = document.getElementById('typeFilters');
+            if (typeContainer) {
+                typeContainer.innerHTML = '';
+                uniqueTypes.forEach(typ => {
+                    const checked = savedTypes == null ? true : savedTypes.has(typ);
+                    const typeInfo = typeMap[typ] || { name: typ };
+                    const typeName = typeInfo.name || typ;
+                    const label = document.createElement('label');
+                    label.className = 'checkbox-label';
+                    label.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} value="${String(typ).replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" onchange="renderSchedule()"> ${String(typeName).replace(/&/g, '&amp;').replace(/</g, '&lt;')} (${String(typ).replace(/&/g, '&amp;')})`;
+                    typeContainer.appendChild(label);
+                });
+            }
+
+            updateToolbarButtons();
         }
 
         // Helpery do przycisków "Wszystkie/Żadne"
         function toggleAll(type, checked) {
             const container = type === 'subject' ? document.getElementById('subjectFilters') : document.getElementById('typeFilters');
+            if (!container) return;
             const inputs = container.querySelectorAll('input');
             inputs.forEach(inp => inp.checked = checked);
             renderSchedule();
         }
 
+        // Modal dodawania własnego przedmiotu
+        function openAddSubjectModal() {
+            document.getElementById('addSubjectModal').style.display = 'flex';
+            document.getElementById('customSubjName').focus();
+        }
+
+        function closeAddSubjectModal() {
+            document.getElementById('addSubjectModal').style.display = 'none';
+            document.getElementById('addSubjectForm').reset();
+            document.getElementById('customSubjColor').value = "#b2dfdb";
+            document.getElementById('customSubjAutoSelect').checked = true;
+        }
+
+        function handleAddSubjectSubmit(e) {
+            if(e && e.preventDefault) e.preventDefault();
+            e.preventDefault();
+            const name = document.getElementById('customSubjName').value.trim();
+            const day = document.getElementById('customSubjDay').value;
+            const type = document.getElementById('customSubjType').value;
+            const start = document.getElementById('customSubjStart').value;
+            const end = document.getElementById('customSubjEnd').value;
+            const group = document.getElementById('customSubjGroup').value.trim() || '1';
+            const room = document.getElementById('customSubjRoom').value.trim();
+            const color = document.getElementById('customSubjColor').value;
+            const autoSelect = document.getElementById('customSubjAutoSelect').checked;
+
+            if (!name) {
+                alert("Podaj nazwę przedmiotu.");
+                return;
+            }
+
+            if (timeToMinutes(end) <= timeToMinutes(start)) {
+                alert("Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia.");
+                return;
+            }
+
+            const newEvent = {
+                id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                day: day,
+                start: start,
+                end: end,
+                subject: name,
+                type: type,
+                group: group,
+                room: room,
+                color: color,
+                isCustom: true
+            };
+
+            if (!metaData[name]) {
+                metaData[name] = {
+                    ects: "?",
+                    status: "Własny",
+                    verify: "?",
+                    short: name.length > 20 ? name.slice(0, 17) + "..." : name,
+                    color: color
+                };
+            }
+
+            if (autoSelect) {
+                myPlan[planKey(newEvent)] = newEvent.group;
+            }
+
+            customEvents.push(newEvent);
+
+            closeAddSubjectModal();
+            initFilters();
+
+            // Upewniamy się, że nowo dodany przedmiot i typ są zaznaczone w filtrach!
+            document.querySelectorAll('#subjectFilters input').forEach(cb => {
+                if (cb.value === name) cb.checked = true;
+            });
+            document.querySelectorAll('#typeFilters input').forEach(cb => {
+                if (cb.value === type) cb.checked = true;
+            });
+
+            saveOptions();
+            renderSchedule();
+        }
+
+        function deleteCustomEvent(id) {
+            const idx = customEvents.findIndex(e => e.id === id);
+            if (idx !== -1) {
+                const ev = customEvents[idx];
+                if (myPlan[planKey(ev)] === ev.group) {
+                    delete myPlan[planKey(ev)];
+                }
+                customEvents.splice(idx, 1);
+                initFilters();
+                renderSchedule();
+            }
+        }
+
         // Główna funkcja renderująca
         function renderSchedule() {
+            const allData = getAllData();
+
             // 1. Pobierz aktywne filtry
             const activeSubjects = Array.from(document.querySelectorAll('#subjectFilters input:checked')).map(cb => cb.value);
             const activeTypes = Array.from(document.querySelectorAll('#typeFilters input:checked')).map(cb => cb.value);
@@ -485,9 +1189,18 @@
             document.querySelectorAll('.day-col .event').forEach(el => el.remove());
 
             // 3. Filtruj dane
-            const filteredData = rawData.filter(item =>
+            let filteredData = allData.filter(item =>
                 activeSubjects.includes(item.subject) && activeTypes.includes(item.type)
             );
+
+            const hasMyPlan = Object.keys(myPlan).length > 0;
+
+            // Jeśli aktywny jest tryb "Pokaż tylko mój plan (wybrane)", zostawiamy wyłącznie zaznaczone grupy
+            if (showOnlySelected) {
+                filteredData = filteredData.filter(item => {
+                    return myPlan[planKey(item)] === item.group;
+                });
+            }
 
             // 4. Grupuj wg dnia
             const eventsByDay = { "Poniedziałek": [], "Wtorek": [], "Środa": [], "Czwartek": [], "Piątek": [] };
@@ -499,6 +1212,14 @@
                 const durationMin = endMin - startMin;
                 const height = (durationMin / 60) * cellHeight;
 
+                const subjMeta = metaData[item.subject] || {
+                    ects: "?",
+                    status: item.isCustom ? "Własny" : "?",
+                    verify: "?",
+                    short: item.subject,
+                    color: item.color || "#b2dfdb"
+                };
+
                 const parsed = {
                     ...item,
                     top: top,
@@ -506,8 +1227,8 @@
                     startMin: startMin,
                     endMin: endMin,
                     durationMin: durationMin,
-                    meta: metaData[item.subject] || { ects: "?", status: "?", verify: "?", short: item.subject, color: "#eee" },
-                    typeMeta: typeMap[item.type] || { badge: "?", color: "#333", name: item.type }
+                    meta: subjMeta,
+                    typeMeta: typeMap[item.type] || { badge: item.type ? item.type[0] : "?", color: "#455a64", name: item.type }
                 };
                 if (eventsByDay[item.day]) eventsByDay[item.day].push(parsed);
             });
@@ -518,7 +1239,6 @@
                 layoutDay(dayEvents); // Przelicz pozycje tylko dla widocznych!
 
                 const container = document.getElementById('col-' + day);
-                const hasMyPlan = Object.keys(myPlan).length > 0;
 
                 dayEvents.forEach(ev => {
                     const el = document.createElement('div');
@@ -531,22 +1251,43 @@
                     el.style.zIndex = 5 + ev.colIndex;
 
                     const isInMyPlan = myPlan[planKey(ev)] === ev.group;
-                    if (hasMyPlan && !isInMyPlan) {
-                        el.classList.add('event-dimmed');
-                    }
-                    if (isInMyPlan) {
-                        el.classList.add('event-my-plan');
+                    if (!showOnlySelected) {
+                        if (hasMyPlan && !isInMyPlan) {
+                            el.classList.add('event-dimmed');
+                        }
+                        if (isInMyPlan) {
+                            el.classList.add('event-my-plan');
+                        }
+                    } else {
+                        el.classList.add('event-my-plan-full');
                     }
 
                     let nameStyle = '';
                     if (ev.durationMin <= 45) {
-                        nameStyle = 'font-size: 0.65rem; line-height: 1.0;';
+                        nameStyle = 'font-size: 0.68rem; line-height: 1.0;';
+                    } else if (showOnlySelected) {
+                        nameStyle = 'font-size: 0.84rem; font-weight: 700; line-height: 1.25;';
+                    }
+
+                    // W trybie "tylko wybrane" kafelki są szerokie (wyjustowane), więc wyświetlamy pełną nazwę
+                    const displayName = showOnlySelected ? ev.subject : (ev.meta.short || ev.subject);
+
+                    let deleteHtml = '';
+                    if (ev.isCustom) {
+                        deleteHtml = `<button class="delete-event-btn" title="Usuń ten własny przedmiot" onclick="event.stopPropagation(); deleteCustomEvent('${ev.id}')">&times;</button>`;
+                    }
+
+                    let roomHtml = '';
+                    if (ev.room) {
+                        roomHtml = `<div class="event-room">${ev.room}</div>`;
                     }
 
                     el.innerHTML = `
+                        ${deleteHtml}
                         <div class="group-badge">Gr. ${ev.group}</div>
                         <div class="type-badge" style="background-color: ${ev.typeMeta.color}">${ev.typeMeta.badge}</div>
-                        <div class="subject-name" style="${nameStyle}">${ev.meta.short}</div>
+                        <div class="subject-name" style="${nameStyle}">${displayName}</div>
+                        ${roomHtml}
                         <div class="event-time">${ev.start} - ${ev.end}</div>
                     `;
 
@@ -555,7 +1296,7 @@
                 });
             });
 
-            updateUnselectedSummary(activeSubjects, activeTypes);
+            updateSelectionPanel(activeSubjects, activeTypes, hasMyPlan);
             saveOptions();
         }
 
